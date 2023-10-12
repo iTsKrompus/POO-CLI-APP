@@ -2,9 +2,9 @@ package upm;
 
 import org.junit.jupiter.api.Test;
 
-class AppTest {
+class UserTest {
     @Test
-    void testApp(){
-        new App();
+    void testUser(){
+        new User();
     }
 }
