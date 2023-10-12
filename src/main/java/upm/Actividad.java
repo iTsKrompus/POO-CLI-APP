@@ -1,5 +1,7 @@
 package upm;
 
+import java.util.Scanner;
+
 public class Actividad {
     private String tipo;
     private String nombre;
@@ -9,6 +11,12 @@ public class Actividad {
     private int aforo;
 
     public Actividad(String tipo, String nombre, String descripcion, int duracion, float coste,int aforo ){
+        while(!tipo.equals("genérica")&&!(tipo.equals("cine"))&&!(tipo.equals("teatro"))){
+            System.out.print("Introduzca el tipo de actividad(genérica, cine o teatro)\n");
+            System.out.print("Tipo de actividad no existente:\n");
+            Scanner sc = new Scanner(System.in);
+            tipo = sc.nextLine();
+        }
         this.tipo=tipo;
         this.nombre=nombre;
         this.descripcion=descripcion;
