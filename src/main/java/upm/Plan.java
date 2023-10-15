@@ -9,13 +9,16 @@ public class Plan {
     private final String lugarEncuentro;
     private int capacidadMax;
 
-    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int capacidadMax, ArrayList<Actividad> actividad) {
+    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int capacidadMax, ArrayList<Actividad> actividadList, ArrayList<User> userList) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.hora = hora;
         this.lugarEncuentro = lugarEncuentro;
-        this.capacidadMax = capacidadMax;
-        actividad = new ArrayList<>();
+        if (capacidadMax == 0) {
+            this.capacidadMax = Integer.MAX_VALUE;
+        } else {
+            this.capacidadMax = capacidadMax;
+        }
     }
 
     public String getNombre() {

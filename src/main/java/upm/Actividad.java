@@ -59,7 +59,7 @@ public class Actividad {
     public void aplicarDto(User user){
         if(tipo.equals("teatro")&& user.getEdad()<=25){
             coste*=0.5;
-        } else if (tipo.equals("teatro")&&user.getEdad()>=65{
+        } else if (tipo.equals("teatro")&&user.getEdad()>=65){
             coste*=0.7;
         } else if(tipo.equals("cine")&&user.getEdad()<=21){
             coste*=0.5;
