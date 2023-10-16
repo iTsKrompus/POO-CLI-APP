@@ -3,45 +3,53 @@ package upm;
 import java.util.Scanner;
 
 public class Actividad {
-    private String tipo;
-    private String nombre;
-    private String descripcion;
-    private int duracion;
+    private final String tipo;
+    private final String nombre;
+    private final String descripcion;
+    private final int duracion;
     private double coste;
-    private int aforo;
+    private final int aforo;
 
-    public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste,int aforo ){
-        while(!tipo.equals("genérica")&&!(tipo.equals("cine"))&&!(tipo.equals("teatro"))){
+    public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste, int aforo) {
+        while (!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
             System.out.print("Introduzca el tipo de actividad(genérica, cine o teatro)\n");
             System.out.print("Tipo de actividad no existente:\n");
             Scanner sc = new Scanner(System.in);
             tipo = sc.nextLine();
         }
-        this.tipo=tipo;
-        this.nombre=nombre;
-        this.descripcion=descripcion;
-        this.duracion=duracion;
-        this.coste=coste;
-        this.aforo=aforo;
-
+        this.tipo = tipo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.coste = coste;
+        if (aforo == 0) {
+            this.aforo = Integer.MAX_VALUE;
+        } else {
+            this.aforo = aforo;
+        }
     }
 
-    public String getTipo(){
+    public String getTipo() {
         return tipo;
     }
-    public String getNombre(){
+
+    public String getNombre() {
         return nombre;
     }
-    public String getDescripcion(){
+
+    public String getDescripcion() {
         return descripcion;
     }
-    public int getDuracion(){
+
+    public int getDuracion() {
         return duracion;
     }
-    public double getCoste(){
+
+    public double getCoste() {
         return coste;
     }
-    public int getAforo(){
+
+    public int getAforo() {
         return aforo;
     }
 
@@ -56,13 +64,15 @@ public class Actividad {
                 ", aforo=" + aforo +
                 '}';
     }
-    public void aplicarDto(User user){
-        if(tipo.equals("teatro")&& user.getEdad()<=25){
-            coste*=0.5;
-        } else if (tipo.equals("teatro")&&user.getEdad()>=65){
-            coste*=0.7;
-        } else if(tipo.equals("cine")&&user.getEdad()<=21){
-            coste*=0.5;
+
+    public double aplicarDto(User user) {
+        if (tipo.equals("teatro") && user.getEdad() <= 25) {
+            this.coste *= 0.5;
+        } else if (tipo.equals("teatro") && user.getEdad() >= 65) {
+            this.coste *= 0.3;
+        } else if (tipo.equals("cine") && user.getEdad() <= 21) {
+            this.coste *= 0.5;
         }
+        return coste;
     }
 }

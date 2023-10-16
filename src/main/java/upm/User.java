@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class User {
     private final int edad;
     private final long telefono;
-    private String nombreUsuario;
     private final String password;
+    private String nombreUsuario;
 
 
     public User(String nombreUsuario, int edad, long telefono, String password) {
