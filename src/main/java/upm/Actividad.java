@@ -7,8 +7,8 @@ public class Actividad {
     private final String nombre;
     private final String descripcion;
     private final int duracion;
-    private double coste;
     private final int aforo;
+    private double coste;
     private Integer id;
 
     public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste, int aforo) {
@@ -58,7 +58,7 @@ public class Actividad {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id) {gi
         this.id = id;
     }
 

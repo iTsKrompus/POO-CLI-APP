@@ -5,16 +5,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class User {
+    private static final Map<Integer, User> userList = new HashMap<>();
     private final int edad;
-    private int telefono;
     private final String password;
+    private int telefono;
     private String nombreUsuario;
     private Integer id;
 
-    private static Map<Integer, User> userList = new HashMap<>();
-
     public User(String nombreUsuario, int edad, int telefono, String password) {
-        if(isNomUserUnico(nombreUsuario)){
+        if (isNomUserUnico(nombreUsuario)) {
             throw new IllegalArgumentException("Nombre de usuario ya existente");
         }
         this.nombreUsuario = nombreUsuario;
