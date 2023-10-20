@@ -17,8 +17,8 @@ public class ActividadTest {
         act = new Actividad("teatro", "salida", "Actividad para no tan jovenes", 140, 25.99, 10);
         act2 = new Actividad("cine", "salida", "Actividad para no tan jovenes", 140, 25.99, 10);
 
-        user = new User("Hugo", 18, 6290336521L, "123");
-        user2 = new User("Paco", 27, 6290966521L, "273");
+        user = new User("Hugo", 18, 629033652, "123");
+        user2 = new User("Paco", 27, 629096621, "273");
 
 
     }

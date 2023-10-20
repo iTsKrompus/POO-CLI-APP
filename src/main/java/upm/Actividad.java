@@ -9,6 +9,7 @@ public class Actividad {
     private final int duracion;
     private double coste;
     private final int aforo;
+    private Integer id;
 
     public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste, int aforo) {
         while (!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
@@ -51,6 +52,14 @@ public class Actividad {
 
     public int getAforo() {
         return aforo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

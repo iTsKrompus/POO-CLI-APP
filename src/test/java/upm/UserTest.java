@@ -10,7 +10,8 @@ class UserTest {
 
     @BeforeEach
     void before() {
-        user = new User("Hugo", 57, 6290336521L, "123");
+        user = new User("Hugo", 57, 629054242, "123");
+
     }
 
 

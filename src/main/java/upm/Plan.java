@@ -8,6 +8,7 @@ public class Plan {
     private final String hora;
     private final String lugarEncuentro;
     private int capacidadMax;
+    private int id;
 
     public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int capacidadMax, ArrayList<Actividad> actividadList, ArrayList<User> userList) {
         this.nombre = nombre;
@@ -50,5 +51,13 @@ public class Plan {
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
                 ", capacidadMax=" + capacidadMax +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

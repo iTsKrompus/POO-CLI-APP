@@ -1,15 +1,22 @@
 package upm;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class User {
     private final int edad;
-    private final long telefono;
+    private int telefono;
     private final String password;
     private String nombreUsuario;
+    private Integer id;
 
+    private static Map<Integer, User> userList = new HashMap<>();
 
-    public User(String nombreUsuario, int edad, long telefono, String password) {
+    public User(String nombreUsuario, int edad, int telefono, String password) {
+        if(isNomUserUnico(nombreUsuario)){
+            throw new IllegalArgumentException("Nombre de usuario ya existente");
+        }
         this.nombreUsuario = nombreUsuario;
         while (edad < 14 || edad > 100) {
             System.out.print("Introduzca otro valor de edad\n");
@@ -18,6 +25,9 @@ public class User {
             edad = sc.nextInt();
         }
         this.edad = edad;
+        if (!isTelefonoUnico(telefono)) {
+            throw new IllegalArgumentException("El número de teléfono " + telefono + " ya existe");
+        }
         this.telefono = telefono;
         while (password.length() < 3) {
             System.out.print("La contraseña es demasiado corta (3 caracteres al menos)");
@@ -39,8 +49,12 @@ public class User {
         return edad;
     }
 
-    public long getTelefono() {
+    public int getTelefono() {
         return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
 
     public String getPassword() {
@@ -57,5 +71,16 @@ public class User {
                 '}';
     }
 
+    public boolean isTelefonoUnico(int telefono) {
+        return !userList.containsKey(telefono);
+    }
 
+    public boolean isNomUserUnico(String nombre) {
+        for (User user : userList.values()) {
+            if (user.getNombreUsuario().equals(nombre)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
