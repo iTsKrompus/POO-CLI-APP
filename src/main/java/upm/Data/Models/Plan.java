@@ -1,4 +1,4 @@
-package upm;
+package upm.Data.Models;
 
 import java.util.ArrayList;
 

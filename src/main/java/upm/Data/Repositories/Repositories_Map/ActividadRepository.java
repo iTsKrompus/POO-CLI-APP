@@ -1,4 +1,6 @@
-package upm;
+package upm.Data.Repositories.Repositories_Map;
+
+import upm.Data.Models.Actividad;
 
 public class ActividadRepository extends GenericRepository<Actividad> {
     @Override

@@ -1,4 +1,6 @@
-package upm;
+package upm.Data.Repositories.Repositories_Map;
+
+import upm.Data.Models.Plan;
 
 public class PlanRepository extends GenericRepository<Plan> {
 
