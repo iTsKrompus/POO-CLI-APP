@@ -1,4 +1,6 @@
 package upm.Data.Repositories;
 
-public interface ActividadRepositoryInterface {
+import upm.Data.Models.Actividad;
+
+public interface ActividadRepositoryInterface extends GenericRepositoryInterface<Actividad> {
 }

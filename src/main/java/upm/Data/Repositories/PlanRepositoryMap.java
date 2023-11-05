@@ -1,4 +1,6 @@
 package upm.Data.Repositories;
 
-public interface PlanRepositoryMap {
+import upm.Data.Models.Plan;
+
+public interface PlanRepositoryMap extends GenericRepositoryInterface<Plan>{
 }

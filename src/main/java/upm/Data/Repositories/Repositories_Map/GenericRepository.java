@@ -1,18 +1,22 @@
 package upm.Data.Repositories.Repositories_Map;
 
+import upm.Data.Repositories.GenericRepositoryInterface;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
-public abstract class GenericRepository<T> {
+public abstract class GenericRepository<T> implements GenericRepositoryInterface {
     private final HashMap<Integer, T> map;
     private int id;
 
-    public GenericRepository() {
+    GenericRepository() {
         this.map = new HashMap<>();
         this.id = 1;
     }
 
+    @Override
     public T create(T entity) {
         this.setId(entity, this.id);
         map.put(id, entity);
@@ -20,21 +24,23 @@ public abstract class GenericRepository<T> {
         return entity;
     }
 
-    public T read(Integer id) {
-        return map.get(id);
+    @Override
+    public Optional<T> read(Integer id) {
+        return Optional.ofNullable(map.get(id));
     }
 
-    protected T update(T entity) {
+    @Override
+    public T update(T entity) {
         map.put(getId(entity), entity);
         return entity;
     }
 
-
-    public void delete(Integer id) {
+    @Override
+    public void delete(Integer id){
         map.remove(id);
-
     }
 
+    @Override
     public List<T> findAll() {
         return new ArrayList<>(map.values());
     }
@@ -43,4 +49,3 @@ public abstract class GenericRepository<T> {
 
     protected abstract int getId(T entity);
 }
-

@@ -11,11 +11,9 @@ public class User {
     private int telefono;
     private String nombreUsuario;
     private Integer id;
+    private String loginStatus = "disconected";
 
     public User(String nombreUsuario, int edad, int telefono, String password) {
-        if (isNomUserUnico(nombreUsuario)) {
-            throw new IllegalArgumentException("Nombre de usuario ya existente");
-        }
         this.nombreUsuario = nombreUsuario;
         while (edad < 14 || edad > 100) {
             System.out.print("Introduzca otro valor de edad\n");
@@ -53,6 +51,7 @@ public class User {
     }
 
     public void setTelefono(int telefono) {
+        if(isTelefonoUnico(telefono))
         this.telefono = telefono;
     }
 
@@ -74,11 +73,10 @@ public class User {
         return !userList.containsKey(telefono);
     }
 
-    public boolean isNomUserUnico(String nombre) {
-        for (User user : userList.values()) {
-            if (user.getNombreUsuario().equals(nombre)) {
-                return false;
-            }
+
+    public boolean verifyLogin(){
+        if (this.loginStatus == "disconected"){
+            return false;
         }
         return true;
     }
