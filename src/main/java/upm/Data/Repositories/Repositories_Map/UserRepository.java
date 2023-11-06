@@ -18,24 +18,24 @@ public class UserRepository extends GenericRepository<User> implements UserRepos
     }
 
 
-@Override
-public Optional<User> isMobileUnic (Integer mobile) {
-    for (User user : findAll()) {
-        if (user.getTelefono() == mobile){
-            return (Optional.of(user));
+    @Override
+    public Optional<User> isMobileUnic(int mobile) {
+        for (User user : findAll()) {
+            if (user.getTelefono() == mobile) {
+                return (Optional.of(user));
+            }
         }
+        return Optional.empty();
     }
-    return Optional.empty();
-}
 
     @Override
-public Optional<User> isNameUnic(String nombre) {
-    for (User user : findAll()) {
-        if (user.getNombreUsuario().equals(nombre)) {
-            return Optional.of(user);
+    public Optional<User> isNameUnic(String nombre) {
+        for (User user : findAll()) {
+            if (user.getNombreUsuario().equals(nombre)) {
+                return Optional.of(user);
+            }
         }
-    }
-   return Optional.empty();
+        return Optional.empty();
     }
 
 }

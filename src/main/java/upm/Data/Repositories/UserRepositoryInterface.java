@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface UserRepositoryInterface extends GenericRepositoryInterface<User> {
     Optional<User> isNameUnic(String nombre);
-    Optional<User> isMobileUnic(Integer telefono);
+
+    Optional<User> isMobileUnic(int telefono);
 }

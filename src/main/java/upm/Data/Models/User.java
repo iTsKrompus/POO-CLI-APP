@@ -66,11 +66,11 @@ public class User {
     }
 
 
-
-    public String getLoginStatus(){
+    public String getLoginStatus() {
         return loginStatus;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.loginStatus = status;
     }
 }

@@ -36,7 +36,7 @@ public abstract class GenericRepository<T> implements GenericRepositoryInterface
     }
 
     @Override
-    public void delete(Integer id){
+    public void delete(Integer id) {
         map.remove(id);
     }
 

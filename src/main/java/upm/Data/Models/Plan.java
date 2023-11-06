@@ -1,5 +1,6 @@
 package upm.Data.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plan {
@@ -9,10 +10,10 @@ public class Plan {
     private final String lugarEncuentro;
     private int aforo;
     private int id;
-    private List<Actividad> actividades;
-    private List<User> userList;
+    private final List<Actividad> actividades;
+    private final List<User> userList;
 
-    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int aforo, List<Actividad> actividades, List<User> userList) {
+    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int aforo) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.hora = hora;
@@ -22,6 +23,8 @@ public class Plan {
         } else {
             this.aforo = aforo;
         }
+        this.actividades = new ArrayList<>();
+        this.userList = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -66,11 +69,19 @@ public class Plan {
     public void addActividad(Actividad actividad) {
         if (actividad.getAforo() <= this.getAforo()) {
             actividades.add(actividad);
-            if(actividad.getAforo()< this.getAforo()){
+            if (actividad.getAforo() < this.getAforo()) {
                 this.setAforo(actividad.getAforo());
             }
-        } else{
+        } else {
             throw new IllegalArgumentException("El aforo de la actividad no puede ser mayor al del plan\n");
+        }
+    }
+
+    public void deleteActividad(Actividad actividad) {
+        if (this.actividades.contains(actividad)) {
+            actividades.remove(actividad);
+        } else {
+            throw new IllegalArgumentException("La actividad no se encuentra en el plan\n");
         }
     }
 
