@@ -13,7 +13,7 @@ public class Actividad {
 
     public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste, int aforo) {
         while (!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
-            System.out.print("Introduzca el tipo de actividad(genérica, cine o teatro)\n");
+            System.out.print("Introduzca el tipo de actividad existente(genérica, cine o teatro)\n");
             System.out.print("Tipo de actividad no existente:\n");
             Scanner sc = new Scanner(System.in);
             tipo = sc.nextLine();

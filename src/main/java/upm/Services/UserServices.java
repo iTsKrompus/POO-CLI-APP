@@ -3,10 +3,11 @@ package upm.Services;
 import upm.Data.Models.User;
 import upm.Data.Repositories.UserRepositoryInterface;
 
+import java.util.Optional;
+
 public class UserServices {
 
-    //Crear el login comprobando que el nombre y la contraseña coincidan. En cuanto al logout, de momento no (lo haremos con el cli)
-    //Si los repositorios
+
     private final UserRepositoryInterface userRepositoryInterface;
 
     public UserServices(UserRepositoryInterface userRepositoryInterface) {
@@ -21,4 +22,18 @@ public class UserServices {
         }
         return userRepositoryInterface.create(user);
     }
-}
+    public User login (String name, String password){
+        Optional<User> userOptional = userRepositoryInterface.isNameUnic(name);
+            if (userOptional.isPresent()){
+               User user = userOptional.get();
+               if(user.getPassword().equals(password)) {
+                   user.setStatus("connected");
+                   return user;
+               }
+            }
+        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
+        }
+
+
+    }
+

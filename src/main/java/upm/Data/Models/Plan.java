@@ -1,24 +1,26 @@
 package upm.Data.Models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Plan {
     private final String nombre;
     private final String fecha;
     private final String hora;
     private final String lugarEncuentro;
-    private int capacidadMax;
+    private int aforo;
     private int id;
+    private List<Actividad> actividades;
+    private List<User> userList;
 
-    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int capacidadMax, ArrayList<Actividad> actividadList, ArrayList<User> userList) {
+    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int aforo, List<Actividad> actividades, List<User> userList) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.hora = hora;
         this.lugarEncuentro = lugarEncuentro;
-        if (capacidadMax == 0) {
-            this.capacidadMax = Integer.MAX_VALUE;
+        if (aforo == 0) {
+            this.aforo = Integer.MAX_VALUE;
         } else {
-            this.capacidadMax = capacidadMax;
+            this.aforo = aforo;
         }
     }
 
@@ -34,12 +36,12 @@ public class Plan {
         return lugarEncuentro;
     }
 
-    public int getCapacidadMax() {
-        return capacidadMax;
+    public int getAforo() {
+        return aforo;
     }
 
-    public void setCapacidadMax(int newCapacidad) {
-        capacidadMax = newCapacidad;
+    public void setAforo(int newAforo) {
+        aforo = newAforo;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Plan {
                 ", fecha='" + fecha + '\'' +
                 ", hora='" + hora + '\'' +
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
-                ", capacidadMax=" + capacidadMax +
+                ", aforo=" + aforo +
                 '}';
     }
 
@@ -59,5 +61,24 @@ public class Plan {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void addActividad(Actividad actividad) {
+        if (actividad.getAforo() <= this.getAforo()) {
+            actividades.add(actividad);
+            if(actividad.getAforo()< this.getAforo()){
+                this.setAforo(actividad.getAforo());
+            }
+        } else{
+            throw new IllegalArgumentException("El aforo de la actividad no puede ser mayor al del plan\n");
+        }
+    }
+
+    public List<Actividad> getActividades() {
+        return actividades;
+    }
+
+    public List<User> getUserList() {
+        return userList;
     }
 }

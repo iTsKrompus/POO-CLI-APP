@@ -34,14 +34,14 @@ public class PlanTest {
     }
 
     @Test
-    public void testGetCapacidadMax() {
-        assertEquals(2147483647, plan.getCapacidadMax());
+    public void testAforo() {
+        assertEquals(2147483647, plan.getAforo());
     }
 
     @Test
-    public void testSetCapacidadMax() {
-        plan.setCapacidadMax(15);
-        assertEquals(15, plan.getCapacidadMax());
+    public void setAforo() {
+        plan.setAforo(15);
+        assertEquals(15, plan.getAforo());
     }
 }
 

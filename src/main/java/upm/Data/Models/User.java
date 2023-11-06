@@ -22,9 +22,6 @@ public class User {
             edad = sc.nextInt();
         }
         this.edad = edad;
-        if (!isTelefonoUnico(telefono)) {
-            throw new IllegalArgumentException("El número de teléfono " + telefono + " ya existe");
-        }
         this.telefono = telefono;
         while (password.length() < 3) {
             System.out.print("La contraseña es demasiado corta (3 caracteres al menos)");
@@ -51,7 +48,6 @@ public class User {
     }
 
     public void setTelefono(int telefono) {
-        if(isTelefonoUnico(telefono))
         this.telefono = telefono;
     }
 
@@ -69,15 +65,12 @@ public class User {
                 '}';
     }
 
-    public boolean isTelefonoUnico(int telefono) {
-        return !userList.containsKey(telefono);
+
+
+    public String getLoginStatus(){
+        return loginStatus;
     }
-
-
-    public boolean verifyLogin(){
-        if (this.loginStatus == "disconected"){
-            return false;
-        }
-        return true;
+    public void setStatus(String status){
+        this.loginStatus = status;
     }
 }
