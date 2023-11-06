@@ -9,7 +9,7 @@ public interface GenericRepositoryInterface<T> {
 
     T update(T entity);
 
-    Optional<T> read(T entity);
+    Optional<T> read(Integer id);
 
     List<T> findAll();
 

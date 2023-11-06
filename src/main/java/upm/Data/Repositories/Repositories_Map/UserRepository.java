@@ -28,7 +28,7 @@ public Optional<User> isMobileUnic (Integer mobile) {
     return Optional.empty();
 }
 
-@Override
+    @Override
 public Optional<User> isNameUnic(String nombre) {
     for (User user : findAll()) {
         if (user.getNombreUsuario().equals(nombre)) {
