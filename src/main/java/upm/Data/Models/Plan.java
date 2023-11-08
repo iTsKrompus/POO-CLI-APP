@@ -9,7 +9,7 @@ public class Plan {
     private final String hora;
     private final String lugarEncuentro;
     private int aforo;
-    private int id;
+    private Integer id;
     private final List<Actividad> actividades;
     private final List<User> userList;
 
@@ -25,6 +25,7 @@ public class Plan {
         }
         this.actividades = new ArrayList<>();
         this.userList = new ArrayList<>();
+
     }
 
     public String getNombre() {

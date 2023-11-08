@@ -1,6 +1,8 @@
 package upm.Services;
 
 import upm.Data.Models.User;
+import upm.Data.Models.Plan;
+import upm.Data.Repositories.PlanRepositoryInterface;
 import upm.Data.Repositories.UserRepositoryInterface;
 
 import java.util.Optional;
@@ -9,9 +11,11 @@ public class UserServices {
 
 
     private final UserRepositoryInterface userRepositoryInterface;
+    private final PlanRepositoryInterface planRepositoryInterface;
 
-    public UserServices(UserRepositoryInterface userRepositoryInterface) {
+    public UserServices(UserRepositoryInterface userRepositoryInterface, PlanRepositoryInterface planRepositoryInterface) {
         this.userRepositoryInterface = userRepositoryInterface;
+        this.planRepositoryInterface = planRepositoryInterface;
     }
 
     public User create(User user) {
@@ -33,7 +37,14 @@ public class UserServices {
             }
         throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
         }
+public void listarPlanes(User user) {
 
-
+    if (!(user.getLoginStatus().equals("connected"))) {
+        throw new IllegalArgumentException("No se encuentra loggeado, por favor inicie sesion");
+    }
+    for (Plan plan : planRepositoryInterface.findAll()){
+        System.out.println(plan.toString());
+    }
+}
     }
 
