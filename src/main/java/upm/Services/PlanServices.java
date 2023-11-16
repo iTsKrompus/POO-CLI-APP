@@ -1,12 +1,8 @@
 package upm.Services;
 
-import upm.Data.Models.Actividad;
 import upm.Data.Models.Plan;
 import upm.Data.Models.User;
 import upm.Data.Repositories.PlanRepositoryInterface;
-
-import java.util.Iterator;
-import java.util.List;
 
 
 public class PlanServices {
@@ -21,23 +17,20 @@ public class PlanServices {
         }
         throw new IllegalArgumentException("No puede crear un plan sin loggearse primero\n");
     }
-    public int totalTime (Plan plan){
-        int totalTime = 0;
-        List<Actividad> actividadesList = plan.getActividades();
-        for(int i=0; i< actividadesList.size();i++){
-           Actividad act = actividadesList.get(i);
-            totalTime+=act.getDuracion() + 20;
+    public void listarPlanes() {
+
+        for (Plan plan : planRepositoryInterface.findAll()){
+            System.out.println(plan.toString());
         }
-        return totalTime;
     }
-    public double totalCost(Plan plan, User user){
-        double totalCost = 0;
-        List<Actividad> actividadesList = plan.getActividades();
-        for(int i=0; i< actividadesList.size();i++){
-            Actividad act = actividadesList.get(i);
-            totalCost+=act.aplicarDto(user);
+
+    public void listarPlanesSubscritos() {
+        for (Plan plan : planRepositoryInterface.findAll()) {
+            for (User user : plan.getUserList()) {
+                if (user.getNombreUsuario()) {
+                    System.out.println(plan.toString());
+                }
+            }
         }
-        return totalCost;
-    }
 
 }

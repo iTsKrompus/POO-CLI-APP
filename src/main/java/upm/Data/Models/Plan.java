@@ -5,25 +5,26 @@ import java.util.List;
 
 public class Plan {
     private final String nombre;
-    private final String fecha;
-    private final String hora;
+    private final String fechaInicio;
+    private final String horaInicio;
     private final String lugarEncuentro;
     private int aforo;
     private Integer id;
-    private final List<Actividad> actividades;
+    private final List<Actividad> actividadesList;
     private final List<User> userList;
+    private static final int desplazamiento = 20;
 
     public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int aforo) {
         this.nombre = nombre;
-        this.fecha = fecha;
-        this.hora = hora;
+        this.fechaInicio = fecha;
+        this.horaInicio = hora;
         this.lugarEncuentro = lugarEncuentro;
         if (aforo == 0) {
             this.aforo = Integer.MAX_VALUE;
         } else {
             this.aforo = aforo;
         }
-        this.actividades = new ArrayList<>();
+        this.actividadesList = new ArrayList<>();
         this.userList = new ArrayList<>();
 
     }
@@ -33,7 +34,7 @@ public class Plan {
     }
 
     public String getFecha() {
-        return fecha;
+        return fechaInicio;
     }
 
     public String getLugarEncuentro() {
@@ -52,8 +53,8 @@ public class Plan {
     public String toString() {
         return "Plan{" +
                 "nombre='" + nombre + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", hora='" + hora + '\'' +
+                ", fecha='" + fechaInicio + '\'' +
+                ", hora='" + horaInicio + '\'' +
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
                 ", aforo=" + aforo +
                 '}';
@@ -69,7 +70,7 @@ public class Plan {
 
     public void addActividad(Actividad actividad) {
         if (actividad.getAforo() <= this.getAforo()) {
-            actividades.add(actividad);
+            actividadesList.add(actividad);
             if (actividad.getAforo() < this.getAforo()) {
                 this.setAforo(actividad.getAforo());
             }
@@ -79,18 +80,33 @@ public class Plan {
     }
 
     public void deleteActividad(Actividad actividad) {
-        if (this.actividades.contains(actividad)) {
-            actividades.remove(actividad);
+        if (this.actividadesList.contains(actividad)) {
+            actividadesList.remove(actividad);
         } else {
             throw new IllegalArgumentException("La actividad no se encuentra en el plan\n");
         }
     }
 
     public List<Actividad> getActividades() {
-        return actividades;
+        return actividadesList;
     }
 
     public List<User> getUserList() {
         return userList;
+    }
+    public int totalTime() {
+        int totalTime = 0;
+        for (Actividad act : getActividades()) {
+            totalTime += act.getDuracion() + desplazamiento;
+        }
+        return totalTime;
+    }
+
+    public double totalCost() {
+        double totalCost = 0.0;
+        for (Actividad act : getActividades()) {
+            totalCost += act.getCoste();
+        }
+        return totalCost;
     }
 }

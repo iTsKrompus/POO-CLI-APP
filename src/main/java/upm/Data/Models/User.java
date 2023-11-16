@@ -1,11 +1,8 @@
 package upm.Data.Models;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class User {
-    private static final Map<Integer, User> userList = new HashMap<>();
     private final int edad;
     private final String password;
     private int telefono;
