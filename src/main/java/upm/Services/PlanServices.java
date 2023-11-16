@@ -8,18 +8,20 @@ import upm.Data.Repositories.PlanRepositoryInterface;
 public class PlanServices {
     private final PlanRepositoryInterface planRepositoryInterface;
 
-    public PlanServices(PlanRepositoryInterface planRepositoryInterface){
+    public PlanServices(PlanRepositoryInterface planRepositoryInterface) {
         this.planRepositoryInterface = planRepositoryInterface;
     }
-    public Plan create (Plan plan, User user){
-        if(user.getLoginStatus().equals("connected")){
+
+    public Plan create(Plan plan, User user) {
+        if (user.getLoginStatus().equals("connected")) {
             return planRepositoryInterface.create(plan);
         }
         throw new IllegalArgumentException("No puede crear un plan sin loggearse primero\n");
     }
+
     public void listarPlanes() {
 
-        for (Plan plan : planRepositoryInterface.findAll()){
+        for (Plan plan : planRepositoryInterface.findAll()) {
             System.out.println(plan.toString());
         }
     }
@@ -33,4 +35,5 @@ public class PlanServices {
             }
         }
 
+    }
 }
