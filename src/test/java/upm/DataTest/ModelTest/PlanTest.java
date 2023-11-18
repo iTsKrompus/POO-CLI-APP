@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import upm.Data.Models.Actividad;
 import upm.Data.Models.Plan;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlanTest {
@@ -16,11 +20,11 @@ public class PlanTest {
 
     @BeforeEach
     void before() {
-        plan = new Plan("Quedada", "15-11-2023", "10:30", "Calle lazarillo de Tormes", 0);
-        plan2 = new Plan("Quedada", "15-11-2023", "10:30", "Calle lazarillo de Tormes", 15);
-        act1 = new Actividad("teatro", "salida", "Actividad para no tan jovenes", 140, 25.99, 10);
-        act2 = new Actividad("cine", "salida", "Actividad para no tan jovenes", 140, 25.99, 15);
-        act3 = new Actividad("cine", "salida", "Actividad para no tan jovenes", 140, 25.99, 20);
+        plan = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 0);
+        plan2 = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 15);
+        act1 = new Actividad("teatro", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 10);
+        act2 = new Actividad("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 15);
+        act3 = new Actividad("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 20);
         plan2.getActividades().add(act2);
     }
 
@@ -62,10 +66,5 @@ public class PlanTest {
         assertEquals(20, plan2.getAforo());
     }
 
-    @Test
-    public void deleteActividad() {
-        plan2.deleteActividad(act2);
-        assertEquals(0, plan.getActividades().size());
-    }
 }
 

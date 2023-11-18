@@ -1,17 +1,19 @@
 package upm.Data.Models;
 
+import java.time.Duration;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Actividad {
     private final String tipo;
     private final String nombre;
     private final String descripcion;
-    private final int duracion;
+    private Duration duracion;
     private final int aforo;
     private double coste;
     private Integer id;
 
-    public Actividad(String tipo, String nombre, String descripcion, int duracion, double coste, int aforo) {
+    public Actividad(String tipo, String nombre, String descripcion, Duration duracion, double coste, int aforo) {
         while (!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
             System.out.print("Introduzca el tipo de actividad existente(genérica, cine o teatro)\n");
             System.out.print("Tipo de actividad no existente:\n");
@@ -42,7 +44,7 @@ public class Actividad {
         return descripcion;
     }
 
-    public int getDuracion() {
+    public Duration getDuracion() {
         return duracion;
     }
 
@@ -72,6 +74,15 @@ public class Actividad {
                 ", coste=" + coste +
                 ", aforo=" + aforo +
                 '}';
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object actividad) {
+        return this == actividad || actividad != null && getClass() == actividad.getClass() && (this.equals(((Actividad) actividad).id));
     }
 
     public double aplicarDto(User user) {

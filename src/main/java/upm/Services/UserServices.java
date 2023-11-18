@@ -37,14 +37,6 @@ public class UserServices {
             }
         throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
         }
-public void listarPlanes(User user) {
 
-    if (!(user.getLoginStatus().equals("connected"))) {
-        throw new IllegalArgumentException("No se encuentra loggeado, por favor inicie sesion");
-    }
-    for (Plan plan : planRepositoryInterface.findAll()){
-        System.out.println(plan.toString());
-    }
-}
     }
 

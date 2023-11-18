@@ -1,5 +1,6 @@
 package upm.Data.Models;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class User {
@@ -60,6 +61,15 @@ public class User {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object user) {
+        return this == user || user != null && getClass() == user.getClass() && (this.equals(((User) user).id));
     }
 
 

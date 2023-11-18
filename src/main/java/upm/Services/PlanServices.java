@@ -13,11 +13,8 @@ public class PlanServices {
     }
 
     public Plan create(Plan plan, User user) {
-        if (user.getLoginStatus().equals("connected")) {
             return planRepositoryInterface.create(plan);
         }
-        throw new IllegalArgumentException("No puede crear un plan sin loggearse primero\n");
-    }
 
     public void listarPlanes() {
 
@@ -26,7 +23,7 @@ public class PlanServices {
         }
     }
 
-    public void listarPlanesSubscritos() {
+    public void listarPlanesSubscritos() {  //Por hacer
         for (Plan plan : planRepositoryInterface.findAll()) {
             for (User user : plan.getUserList()) {
                 if (user.getNombreUsuario()) {
@@ -36,4 +33,6 @@ public class PlanServices {
         }
 
     }
+
+
 }

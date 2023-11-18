@@ -1,20 +1,24 @@
 package upm.Data.Models;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Plan {
     private final String nombre;
-    private final String fechaInicio;
-    private final String horaInicio;
+    private final LocalDate fechaInicio;
+    private final LocalTime horaInicio;
     private final String lugarEncuentro;
-    private int aforo;
+    private Integer aforo;
     private Integer id;
     private final List<Actividad> actividadesList;
     private final List<User> userList;
-    private static final int desplazamiento = 20;
+    private static final Duration desplazamiento = Duration.ofMinutes(20);
 
-    public Plan(String nombre, String fecha, String hora, String lugarEncuentro, int aforo) {
+    public Plan(String nombre, LocalDate fecha, LocalTime hora, String lugarEncuentro, Integer aforo) {
         this.nombre = nombre;
         this.fechaInicio = fecha;
         this.horaInicio = hora;
@@ -33,7 +37,7 @@ public class Plan {
         return nombre;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fechaInicio;
     }
 
@@ -59,7 +63,15 @@ public class Plan {
                 ", aforo=" + aforo +
                 '}';
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
+    @Override
+    public boolean equals(Object plan) {
+        return this == plan || plan != null && getClass() == plan.getClass() && (this.equals(((Plan) plan).id));
+    }
     public int getId() {
         return id;
     }
@@ -79,13 +91,6 @@ public class Plan {
         }
     }
 
-    public void deleteActividad(Actividad actividad) {
-        if (this.actividadesList.contains(actividad)) {
-            actividadesList.remove(actividad);
-        } else {
-            throw new IllegalArgumentException("La actividad no se encuentra en el plan\n");
-        }
-    }
 
     public List<Actividad> getActividades() {
         return actividadesList;
@@ -97,7 +102,7 @@ public class Plan {
     public int totalTime() {
         int totalTime = 0;
         for (Actividad act : getActividades()) {
-            totalTime += act.getDuracion() + desplazamiento;
+            totalTime += (int)(act.getDuracion().plus(desplazamiento)).toMinutes();
         }
         return totalTime;
     }
