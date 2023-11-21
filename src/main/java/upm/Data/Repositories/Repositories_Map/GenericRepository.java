@@ -47,5 +47,5 @@ public abstract class GenericRepository<T> implements GenericRepositoryInterface
 
     protected abstract void setId(T entity, Integer id);
 
-    protected abstract int getId(T entity);
+    protected abstract Integer getId(T entity);
 }

@@ -10,7 +10,7 @@ public class ActividadRepository extends GenericRepository<Actividad> implements
     }
 
     @Override
-    protected int getId(Actividad act) {
+    protected Integer getId(Actividad act) {
         return act.getId();
     }
 }

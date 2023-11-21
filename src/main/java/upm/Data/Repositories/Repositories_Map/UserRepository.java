@@ -8,12 +8,12 @@ import java.util.Optional;
 public class UserRepository extends GenericRepository<User> implements UserRepositoryInterface {
 
     @Override
-    protected void setId(User user, Integer telefono) {
-        user.setTelefono(telefono);
+    protected void setId(User user, Integer id) {
+        user.setId(id);
     }
 
     @Override
-    protected int getId(User user) {
+    protected Integer getId(User user) {
         return user.getTelefono();
     }
 

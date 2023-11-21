@@ -10,7 +10,7 @@ public class PlanRepository extends GenericRepository<Plan> {
     }
 
     @Override
-    protected int getId(Plan plan) {
+    protected Integer getId(Plan plan) {
         return plan.getId();
     }
 }

@@ -54,6 +54,9 @@ public class User {
         }
         this.password = password;
     }
+    public void setId(Integer id){
+        this.id = id;
+    }
 
     @Override
     public String toString() {
