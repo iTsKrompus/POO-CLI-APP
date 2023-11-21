@@ -5,31 +5,21 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Actividad {
-    private final String tipo;
+    private  String tipo;
     private final String nombre;
     private final String descripcion;
-    private Duration duracion;
-    private final int aforo;
+    private final Duration duracion;
+    private int aforo;
     private double coste;
     private Integer id;
 
     public Actividad(String tipo, String nombre, String descripcion, Duration duracion, double coste, int aforo) {
-        while (!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
-            System.out.print("Introduzca el tipo de actividad existente(genérica, cine o teatro)\n");
-            System.out.print("Tipo de actividad no existente:\n");
-            Scanner sc = new Scanner(System.in);
-            tipo = sc.nextLine();
-        }
-        this.tipo = tipo;
+        setTipo(tipo);
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.coste = coste;
-        if (aforo == 0) {
-            this.aforo = Integer.MAX_VALUE;
-        } else {
-            this.aforo = aforo;
-        }
+        setAforo(aforo);
     }
 
     public String getTipo() {
@@ -56,6 +46,19 @@ public class Actividad {
         return aforo;
     }
 
+    public void setAforo(Integer aforo) {
+        if (aforo == 0) {
+            aforo = Integer.MAX_VALUE;
+        }
+        this.aforo = aforo;
+    }
+    public void setTipo(String tipo){
+        if(!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))){
+            throw new IllegalArgumentException("Tipo de actividad no existente");
+        }
+        this.tipo = tipo;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -75,6 +78,7 @@ public class Actividad {
                 ", aforo=" + aforo +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

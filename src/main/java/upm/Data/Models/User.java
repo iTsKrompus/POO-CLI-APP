@@ -1,11 +1,10 @@
 package upm.Data.Models;
 
 import java.util.Objects;
-import java.util.Scanner;
 
 public class User {
-    private final int edad;
-    private final String password;
+    private int edad;
+    private String password;
     private int telefono;
     private String nombreUsuario;
     private Integer id;
@@ -13,20 +12,9 @@ public class User {
 
     public User(String nombreUsuario, int edad, int telefono, String password) {
         this.nombreUsuario = nombreUsuario;
-        while (edad < 14 || edad > 100) {
-            System.out.print("Introduzca otro valor de edad\n");
-            System.out.print("La edad introducida no es valida\n");
-            Scanner sc = new Scanner(System.in);
-            edad = sc.nextInt();
-        }
-        this.edad = edad;
+        setEdad(edad);
         this.telefono = telefono;
-        while (password.length() < 3) {
-            System.out.print("La contraseña es demasiado corta (3 caracteres al menos)");
-            Scanner ps = new Scanner(System.in);
-            password = ps.nextLine();
-        }
-        this.password = password;
+        setPassword(password);
     }
 
     public String getNombreUsuario() {
@@ -41,6 +29,13 @@ public class User {
         return edad;
     }
 
+    public void setEdad(int edad) {
+        if (edad < 14 || edad > 100) {
+            throw new IllegalArgumentException("Rango de edad incorrecto (Permitido entre 14 y 100)");
+        }
+        this.edad = edad;
+    }
+
     public int getTelefono() {
         return telefono;
     }
@@ -53,6 +48,13 @@ public class User {
         return password;
     }
 
+    public void setPassword(String password) {
+        if (password.length() < 3) {
+            throw new IllegalArgumentException("La password es demasiado corta (3 caracteres al menos)");
+        }
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -62,6 +64,7 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

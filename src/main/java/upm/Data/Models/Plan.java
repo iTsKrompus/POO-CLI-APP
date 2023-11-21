@@ -8,26 +8,22 @@ import java.util.List;
 import java.util.Objects;
 
 public class Plan {
+    private static final Duration desplazamiento = Duration.ofMinutes(20);
     private final String nombre;
     private final LocalDate fechaInicio;
     private final LocalTime horaInicio;
     private final String lugarEncuentro;
-    private Integer aforo;
-    private Integer id;
     private final List<Actividad> actividadesList;
     private final List<User> userList;
-    private static final Duration desplazamiento = Duration.ofMinutes(20);
+    private Integer aforo;
+    private Integer id;
 
     public Plan(String nombre, LocalDate fecha, LocalTime hora, String lugarEncuentro, Integer aforo) {
         this.nombre = nombre;
         this.fechaInicio = fecha;
         this.horaInicio = hora;
         this.lugarEncuentro = lugarEncuentro;
-        if (aforo == 0) {
-            this.aforo = Integer.MAX_VALUE;
-        } else {
-            this.aforo = aforo;
-        }
+        setAforo(aforo);
         this.actividadesList = new ArrayList<>();
         this.userList = new ArrayList<>();
 
@@ -50,7 +46,10 @@ public class Plan {
     }
 
     public void setAforo(int newAforo) {
-        aforo = newAforo;
+        if (newAforo == 0) {
+            newAforo = Integer.MAX_VALUE;
+        }
+        this.aforo = newAforo;
     }
 
     @Override
@@ -63,6 +62,7 @@ public class Plan {
                 ", aforo=" + aforo +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -72,6 +72,7 @@ public class Plan {
     public boolean equals(Object plan) {
         return this == plan || plan != null && getClass() == plan.getClass() && (this.equals(((Plan) plan).id));
     }
+
     public int getId() {
         return id;
     }
@@ -99,10 +100,11 @@ public class Plan {
     public List<User> getUserList() {
         return userList;
     }
+
     public int totalTime() {
         int totalTime = 0;
         for (Actividad act : getActividades()) {
-            totalTime += (int)(act.getDuracion().plus(desplazamiento)).toMinutes();
+            totalTime += (int) (act.getDuracion().plus(desplazamiento)).toMinutes();
         }
         return totalTime;
     }
