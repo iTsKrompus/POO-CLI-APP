@@ -2,9 +2,8 @@ package upm.Data.Models;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.Scanner;
 
-public class Actividad {
+public abstract class Actividad {
     private  String tipo;
     private final String nombre;
     private final String descripcion;
@@ -40,6 +39,9 @@ public class Actividad {
 
     public double getCoste() {
         return coste;
+    }
+    public void setCoste(double coste){
+        this.coste=coste;
     }
 
     public int getAforo() {
@@ -89,14 +91,5 @@ public class Actividad {
         return this == actividad || actividad != null && getClass() == actividad.getClass() && (this.equals(((Actividad) actividad).id));
     }
 
-    public double aplicarDto(User user) {
-        if (tipo.equals("teatro") && user.getEdad() <= 25) {
-            this.coste *= 0.5;
-        } else if (tipo.equals("teatro") && user.getEdad() >= 65) {
-            this.coste *= 0.3;
-        } else if (tipo.equals("cine") && user.getEdad() <= 21) {
-            this.coste *= 0.5;
-        }
-        return coste;
-    }
+    public abstract double aplicarDto(int edad);
 }
