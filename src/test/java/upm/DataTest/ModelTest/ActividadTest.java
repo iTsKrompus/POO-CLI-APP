@@ -29,28 +29,28 @@ public class ActividadTest {
 
     @Test
     public void aplicarDtoTest() {
-        assertEquals(12.995, (act.aplicarDto(user)));
+        assertEquals(12.995, (act.aplicarDto(user.getEdad())));
     }
 
     @Test
     public void noAplicarDtoTest() {
-        assertEquals(12.995, act.aplicarDto(user2));
+        assertEquals(12.995, act.aplicarDto(user2.getEdad()));
 
     }
 
     @Test
     public void igualAplicarDtoTest() {
-        assertEquals(25.99, act.aplicarDto(user2));
+        assertEquals(25.99, act.aplicarDto(user2.getEdad()));
     }
 
     @Test
     public void cineAplicarDtoTest() {
-        assertEquals(12.995, act.aplicarDto(user));
+        assertEquals(12.995, act.aplicarDto(user.getEdad()));
     }
 
     @Test
     public void cineNoAplicarDtoTest() {
-        assertEquals(25.99, act.aplicarDto(user2));
+        assertEquals(25.99, act.aplicarDto(user2.getEdad()));
     }
 }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Plan {
-    private static final Duration desplazamiento = Duration.ofMinutes(20);
+    private static final Duration DESPLAZAMIENTO = Duration.ofMinutes(20);
     private final String nombre;
     private final LocalDate fechaInicio;
     private final LocalTime horaInicio;
@@ -57,7 +57,7 @@ public class Plan {
         return "Plan{" +
                 "nombre='" + nombre + '\'' +
                 ", fecha='" + fechaInicio + '\'' +
-                ", hora='" + horaInicio + '\'' +
+                ", hora='" + horaInicio + '\'' +DESPLAZAMIENTO
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
                 ", aforo=" + aforo +
                 '}';
@@ -104,7 +104,7 @@ public class Plan {
     public int totalTime() {
         int totalTime = 0;
         for (Actividad act : getActividades()) {
-            totalTime += (int) (act.getDuracion().plus(desplazamiento)).toMinutes();
+            totalTime += (int) (act.getDuracion().plus(DESPLAZAMIENTO)).toMinutes();
         }
         return totalTime;
     }
