@@ -2,6 +2,8 @@ package upm.Console;
 
 public class View {
 
+    public static final String COMMAND = "gps>";
+
     public static final String PURPLE = "\u001B[35m";
     public static final String BLUE = "\u001B[34m";
     public static final String RESET = "\u001B[0m";
@@ -18,6 +20,9 @@ public class View {
     }
     public void ShowError(String message){
         System.out.println(BACKGROUND_RED + View.WHITE + " " + message + " " + View.RESET);
+    }
+    public void showCommand(){
+        System.out.println(COMMAND);
     }
 
 }
