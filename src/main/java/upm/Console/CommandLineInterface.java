@@ -1,5 +1,6 @@
 package upm.Console;
 
+import upm.Data.Models.User;
 import upm.Services.ActividadServices;
 import upm.Services.PlanServices;
 import upm.Services.UserServices;
@@ -61,4 +62,13 @@ public class CommandLineInterface {
         }
         return exit;
     }
-}
+    private void createUser(Scanner scanner){
+        String [] values = scanner.next().split(";");
+        if (values.length != 3) {
+            throw new IllegalArgumentException(CommandNames.CREATE_USER.getHelp());
+        }
+        User createdUser = this.userServices.create(new User(values[0], Integer.valueOf(values[1]), Integer.valueOf(values[2]), values[3]));
+        this.view.show(createdUser.toString());
+    }
+    }
+

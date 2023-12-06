@@ -3,6 +3,8 @@ package upm.DataTest.ModelTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import upm.Data.Models.Actividad;
+import upm.Data.Models.ActividadesTipos.ActividadCine;
+import upm.Data.Models.ActividadesTipos.ActividadTeatro;
 import upm.Data.Models.Plan;
 
 import java.time.Duration;
@@ -22,9 +24,9 @@ public class PlanTest {
     void before() {
         plan = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 0);
         plan2 = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 15);
-        act1 = new Actividad("teatro", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 10);
-        act2 = new Actividad("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 15);
-        act3 = new Actividad("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 20);
+        act1 = new ActividadTeatro("teatro", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 10);
+        act2 = new ActividadCine("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 15);
+        act3 = new ActividadCine("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 20);
         plan2.getActividades().add(act2);
     }
 

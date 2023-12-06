@@ -52,13 +52,16 @@ public class Plan {
         this.aforo = newAforo;
     }
 
+
     @Override
     public String toString() {
         return "Plan{" +
                 "nombre='" + nombre + '\'' +
-                ", fecha='" + fechaInicio + '\'' +
-                ", hora='" + horaInicio + '\'' +DESPLAZAMIENTO
+                ", fechaInicio=" + fechaInicio +
+                ", horaInicio=" + horaInicio +
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
+                ", actividadesList=" + actividadesList +
+                ", userList=" + userList +
                 ", aforo=" + aforo +
                 '}';
     }

@@ -19,7 +19,7 @@ public class UserRepository extends GenericRepository<User> implements UserRepos
 
 
     @Override
-    public Optional<User> isMobileUnic(int mobile) {
+    public Optional<User> findByMobile(int mobile) {
         for (User user : findAll()) {
             if (user.getTelefono() == mobile) {
                 return (Optional.of(user));
@@ -29,7 +29,7 @@ public class UserRepository extends GenericRepository<User> implements UserRepos
     }
 
     @Override
-    public Optional<User> isNameUnic(String nombre) {
+    public Optional<User> findByName(String nombre) {
         for (User user : findAll()) {
             if (user.getNombreUsuario().equals(nombre)) {
                 return Optional.of(user);

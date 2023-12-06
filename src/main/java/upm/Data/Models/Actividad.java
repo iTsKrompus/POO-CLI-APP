@@ -11,6 +11,8 @@ public abstract class Actividad {
     private int aforo;
     private double coste;
     private Integer id;
+    protected static final double DTO_JOVEN = 0.5;
+
 
     public Actividad(String tipo, String nombre, String descripcion, Duration duracion, double coste, int aforo) {
         setTipo(tipo);
