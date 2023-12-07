@@ -1,6 +1,5 @@
 package upm.Console;
 
-import jdk.internal.icu.lang.UCharacterDirection;
 import upm.Data.Models.Actividad;
 import upm.Data.Models.ActividadesTipos.ActividadCine;
 import upm.Data.Models.ActividadesTipos.ActividadGenerica;
@@ -10,10 +9,11 @@ import upm.Data.Models.User;
 import upm.Services.ActividadServices;
 import upm.Services.PlanServices;
 import upm.Services.UserServices;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -48,6 +48,7 @@ public class CommandLineInterface {
         this.view.showCommand();
         CommandNames command = CommandNames.fromValue(scanner.next());
         boolean exit = false;
+        Optional<User> activeUser = Optional.empty();
         switch (command) {
             case CREATE_USER:
                 this.createUser(scanner);
@@ -59,10 +60,10 @@ public class CommandLineInterface {
                 this.createPlan(scanner);
                 break;
             case USER_LOGIN:
-                this.userLogin(scanner);
+                activeUser = userLogin(scanner);
                 break;
             case USER_LOGOUT:
-                this.help();
+                this.userLogout(activeUser);
                 break;
             case HELP:
                 this.help();
@@ -103,13 +104,34 @@ public class CommandLineInterface {
         this.view.show(createdActividad.toString());
     }
 
-    private void createPlan(Scanner scanner){
-        String [] datos = scanner.next().split(";");
-        if(datos.length != 7){
+    private void createPlan(Scanner scanner) {
+        String[] datos = scanner.next().split(";");
+        if (datos.length != 7) {
             throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
         }
         Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1]), LocalTime.parse(datos[2]), datos[3], Integer.parseInt(datos[4])));
         this.view.show(createdPlan.toString());
     }
+
+    private Optional<User> userLogin(Scanner scanner) {
+        try {
+            String[] datos = scanner.next().split(";");
+            if (datos.length != 2) {
+                throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
+            }
+            User userName = userServices.login(datos[0], datos[1]);
+            return Optional.of(userName);
+
+        } catch (IllegalArgumentException exception){
+            return Optional.empty();
+        }
+    }
+    private void userLogout(Optional<User> userName){
+        if (userName.isEmpty()){
+            throw new IllegalArgumentException("No puede cerrar sesión si no la ha iniciado primero");
+        }
+        userName = Optional.empty();
+    }
 }
+
 

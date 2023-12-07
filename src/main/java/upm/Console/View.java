@@ -18,7 +18,7 @@ public class View {
     public void showBold(String message){
         System.out.println((View.PURPLE + " " + message + " " + View.RESET));
     }
-    public void ShowError(String message){
+    public void showError(String message){
         System.out.println(BACKGROUND_RED + View.WHITE + " " + message + " " + View.RESET);
     }
     public void showCommand(){

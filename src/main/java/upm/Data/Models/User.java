@@ -8,7 +8,6 @@ public class User {
     private int telefono;
     private String nombreUsuario;
     private Integer id;
-    private String loginStatus = "disconected";
 
     public User(String nombreUsuario, int edad, int telefono, String password) {
         this.nombreUsuario = nombreUsuario;
@@ -79,11 +78,5 @@ public class User {
     }
 
 
-    public String getLoginStatus() {
-        return loginStatus;
-    }
 
-    public void setStatus(String status) {
-        this.loginStatus = status;
-    }
 }
