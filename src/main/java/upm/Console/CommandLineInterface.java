@@ -1,10 +1,19 @@
 package upm.Console;
 
+import jdk.internal.icu.lang.UCharacterDirection;
+import upm.Data.Models.Actividad;
+import upm.Data.Models.ActividadesTipos.ActividadCine;
+import upm.Data.Models.ActividadesTipos.ActividadGenerica;
+import upm.Data.Models.ActividadesTipos.ActividadTeatro;
+import upm.Data.Models.Plan;
 import upm.Data.Models.User;
 import upm.Services.ActividadServices;
 import upm.Services.PlanServices;
 import upm.Services.UserServices;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import java.time.Duration;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -13,7 +22,7 @@ public class CommandLineInterface {
     private final ActividadServices actividadServices;
     private final PlanServices planServices;
 
-    public CommandLineInterface(View view, PlanServices planServices, UserServices userServices, ActividadServices actividadServices){
+    public CommandLineInterface(View view, PlanServices planServices, UserServices userServices, ActividadServices actividadServices) {
         this.view = view;
         this.actividadServices = actividadServices;
         this.userServices = userServices;
@@ -21,10 +30,11 @@ public class CommandLineInterface {
     }
 
     public void help() {
-        for (CommandNames commandNames : CommandNames.values()){
+        for (CommandNames commandNames : CommandNames.values()) {
             view.show(commandNames.getHelp());
         }
     }
+
     public boolean runCommands() {
         Scanner scanner = new Scanner(System.in).useDelimiter("[:,\\r\\n]");
         boolean exit = false;
@@ -33,6 +43,7 @@ public class CommandLineInterface {
         }
         return true;
     }
+
     private boolean runCommand(Scanner scanner) {
         this.view.showCommand();
         CommandNames command = CommandNames.fromValue(scanner.next());
@@ -62,13 +73,43 @@ public class CommandLineInterface {
         }
         return exit;
     }
-    private void createUser(Scanner scanner){
-        String [] values = scanner.next().split(";");
-        if (values.length != 3) {
+
+    private void createUser(Scanner scanner) {
+        String[] datos = scanner.next().split(";");
+        if (datos.length != 4) {
             throw new IllegalArgumentException(CommandNames.CREATE_USER.getHelp());
         }
-        User createdUser = this.userServices.create(new User(values[0], Integer.valueOf(values[1]), Integer.valueOf(values[2]), values[3]));
+        User createdUser = this.userServices.create(new User(datos[0], Integer.valueOf(datos[1]), Integer.valueOf(datos[2]), datos[3]));
         this.view.show(createdUser.toString());
     }
+
+    private void createActividad(Scanner scanner) {
+        Actividad createdActividad;
+
+        String[] datos = scanner.next().split(";");
+        if (datos.length != 5 && datos.length != 6) {
+            throw new IllegalArgumentException(CommandNames.CREATE_ACTIVIDAD.getHelp());
+        }
+        if (datos[0].equals("teatro")) {
+            createdActividad = actividadServices.create(new ActividadTeatro(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+        } else if (datos[0].equals("cine")) {
+            createdActividad = actividadServices.create(new ActividadCine(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+        } else if (datos[0].equals("generico")) {
+            createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+        } else {
+            createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+
+        }
+        this.view.show(createdActividad.toString());
     }
+
+    private void createPlan(Scanner scanner){
+        String [] datos = scanner.next().split(";");
+        if(datos.length != 7){
+            throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
+        }
+        Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1]), LocalTime.parse(datos[2]), datos[3], Integer.parseInt(datos[4])));
+        this.view.show(createdPlan.toString());
+    }
+}
 

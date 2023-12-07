@@ -1,7 +1,6 @@
 package upm.Services;
 
 import upm.Data.Models.Actividad;
-import upm.Data.Models.User;
 import upm.Data.Repositories.ActividadRepositoryInterface;
 
 
@@ -12,7 +11,7 @@ public class ActividadServices {
         this.actividadRepositoryInterface = actividadRepositoryInterface;
     }
 
-    public Actividad create(Actividad actividad, User user) {
+    public Actividad create(Actividad actividad) {
         return actividadRepositoryInterface.create(actividad);
 
     }

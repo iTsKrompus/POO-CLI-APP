@@ -12,7 +12,7 @@ public class PlanServices {
         this.planRepositoryInterface = planRepositoryInterface;
     }
 
-    public Plan create(Plan plan, User user) {
+    public Plan create(Plan plan) {
             return planRepositoryInterface.create(plan);
         }
 
