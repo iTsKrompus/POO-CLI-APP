@@ -54,10 +54,10 @@ public class CommandLineInterface {
                 this.createUser(scanner);
                 break;
             case CREATE_ACTIVIDAD:
-                this.createActividad(scanner);
+                this.createActividad(scanner, activeUser);
                 break;
             case CREATE_PLAN:
-                this.createPlan(scanner);
+                this.createPlan(scanner, activeUser);
                 break;
             case USER_LOGIN:
                 activeUser = userLogin(scanner);
@@ -84,8 +84,11 @@ public class CommandLineInterface {
         this.view.show(createdUser.toString());
     }
 
-    private void createActividad(Scanner scanner) {
+    private void createActividad(Scanner scanner, Optional<User> activeUser) {
         Actividad createdActividad;
+        if(activeUser.isEmpty()){
+            throw new IllegalArgumentException("No puede crear actividades sin inicar sesión previamente");
+        }
 
         String[] datos = scanner.next().split(";");
         if (datos.length != 5 && datos.length != 6) {
@@ -104,7 +107,11 @@ public class CommandLineInterface {
         this.view.show(createdActividad.toString());
     }
 
-    private void createPlan(Scanner scanner) {
+    private void createPlan(Scanner scanner, Optional<User> activeUser) {
+       if(activeUser.isEmpty()){
+           throw new IllegalArgumentException("No puede crear planes sin iniciar sesión previamente");
+       }
+
         String[] datos = scanner.next().split(";");
         if (datos.length != 7) {
             throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
@@ -114,7 +121,7 @@ public class CommandLineInterface {
     }
 
     private Optional<User> userLogin(Scanner scanner) {
-        try {
+
             String[] datos = scanner.next().split(";");
             if (datos.length != 2) {
                 throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
@@ -122,9 +129,6 @@ public class CommandLineInterface {
             User userName = userServices.login(datos[0], datos[1]);
             return Optional.of(userName);
 
-        } catch (IllegalArgumentException exception){
-            return Optional.empty();
-        }
     }
     private void userLogout(Optional<User> userName){
         if (userName.isEmpty()){
