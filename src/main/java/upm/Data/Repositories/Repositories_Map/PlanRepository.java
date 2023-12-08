@@ -1,8 +1,9 @@
 package upm.Data.Repositories.Repositories_Map;
 
 import upm.Data.Models.Plan;
+import upm.Data.Repositories.PlanRepositoryInterface;
 
-public class PlanRepository extends GenericRepository<Plan> {
+public class PlanRepository extends GenericRepository<Plan> implements PlanRepositoryInterface {
 
     @Override
     protected void setId(Plan plan, Integer id) {

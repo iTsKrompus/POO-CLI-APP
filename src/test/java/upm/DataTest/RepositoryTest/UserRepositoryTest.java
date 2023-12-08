@@ -23,25 +23,25 @@ public class UserRepositoryTest {
 
     @Test
     public void isMobileUnicTestNo() {
-        Optional<User> result = userRepository.isMobileUnic(629054242);
+        Optional<User> result = userRepository.findByMobile(629054242);
         assertTrue(result.isPresent());
     }
 
     @Test
     public void isMobileUnicTestYes() {
-        Optional<User> result = userRepository.isMobileUnic(629054242);
+        Optional<User> result = userRepository.findByMobile(629054242);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void isNameUnicNo() {
-        Optional<User> result = userRepository.isNameUnic("Hugo");
+        Optional<User> result = userRepository.findByName("Hugo");
         assertTrue(result.isPresent());
     }
 
     @Test
     public void isNameUnicYes() {
-        Optional<User> result = userRepository.isNameUnic("Santi");
+        Optional<User> result = userRepository.findByName("Santi");
         assertTrue(result.isEmpty());
     }
 }
