@@ -6,9 +6,11 @@ import upm.Data.Models.ActividadesTipos.ActividadGenerica;
 import upm.Data.Models.ActividadesTipos.ActividadTeatro;
 import upm.Data.Models.Plan;
 import upm.Data.Models.User;
+import upm.DependencyInjector;
 import upm.Services.ActividadServices;
 import upm.Services.PlanServices;
 import upm.Services.UserServices;
+import upm.UserContainer;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -35,35 +37,36 @@ public class CommandLineInterface {
         }
     }
 
-    public boolean runCommands() {
+    public boolean runCommands(DependencyInjector dependencyInjector) {
         Scanner scanner = new Scanner(System.in).useDelimiter("[:,\\r\\n]");
         boolean exit = false;
+        UserContainer userContainer = new UserContainer();
         while (!exit) {
-            exit = runCommand(scanner);
+            exit = runCommand(scanner, dependencyInjector.getUserContainer());
         }
         return true;
     }
 
-    private boolean runCommand(Scanner scanner) {
+    private boolean runCommand(Scanner scanner, UserContainer userContainer) {
         this.view.showCommand();
         CommandNames command = CommandNames.fromValue(scanner.next());
         boolean exit = false;
-        Optional<User> activeUser = Optional.empty();
         switch (command) {
             case CREATE_USER:
                 this.createUser(scanner);
                 break;
             case CREATE_ACTIVIDAD:
-                this.createActividad(scanner, activeUser);
+                this.createActividad(scanner, userContainer.getUser());
                 break;
             case CREATE_PLAN:
-                this.createPlan(scanner, activeUser);
+                this.createPlan(scanner, userContainer.getUser());
                 break;
             case USER_LOGIN:
-                activeUser = userLogin(scanner);
+                 userContainer.setUser(userLogin(scanner));
                 break;
             case USER_LOGOUT:
-                this.userLogout(activeUser);
+                userLogout(userContainer.getUser());
+                userContainer.cleanUser();
                 break;
             case HELP:
                 this.help();
@@ -120,21 +123,22 @@ public class CommandLineInterface {
         this.view.show(createdPlan.toString());
     }
 
-    private Optional<User> userLogin(Scanner scanner) {
+    private User userLogin(Scanner scanner) {
 
             String[] datos = scanner.next().split(";");
             if (datos.length != 2) {
                 throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
             }
             User userName = userServices.login(datos[0], datos[1]);
-            return Optional.of(userName);
+            view.showBold("Bienvenido " + datos[0] + "!");
+            return userName;
 
     }
     private void userLogout(Optional<User> userName){
         if (userName.isEmpty()){
             throw new IllegalArgumentException("No puede cerrar sesión si no la ha iniciado primero");
         }
-        userName = Optional.empty();
+        view.showBold("Adios " + userName.get().getNombreUsuario());
     }
 }
 
