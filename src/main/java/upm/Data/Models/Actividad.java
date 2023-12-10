@@ -81,7 +81,7 @@ public abstract class Actividad {
                 ", descripcion='" + descripcion + '\'' +
                 ", duracion=" + duracion.toMinutes() +
                 ", coste=" + coste +
-                ", aforo=" + aforo +
+                "€, aforo=" + aforo +
                 ", id=" + id +
                 '}';
     }

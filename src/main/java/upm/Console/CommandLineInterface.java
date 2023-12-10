@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -59,6 +60,15 @@ public class CommandLineInterface {
                 break;
             case CREATE_ACTIVIDAD:
                 this.createActividad(scanner, userContainer.getUser());
+                break;
+            case LIST_2HOURS_ACTIVIDADES:
+                this.listTwoHoursDurationActivities(userContainer.getUser());
+                break;
+            case LIST_MAX_COST_10_ACTIVIDADES:
+                this.activitiesTenEuroMaxCost(userContainer.getUser());
+                break;
+            case ACTIVITIES_PER_TYPE:
+                this.activitiesPerType(scanner, userContainer.getUser());
                 break;
             case CREATE_PLAN:
                 this.createPlan(scanner, userContainer.getUser());
@@ -125,7 +135,7 @@ public class CommandLineInterface {
             case "cine":
                 createdActividad = actividadServices.create(new ActividadCine(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
                 break;
-            case "generico":
+            case "generica":
                 createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
                 break;
             default:
@@ -161,7 +171,7 @@ public class CommandLineInterface {
            throw new IllegalArgumentException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
         }
         Integer [] ids = new Integer[] {Integer.parseInt(datos[0]), Integer.parseInt(datos[1])};
-        planServices.addActivityToPlan(ids, activeUser.get());
+        planServices.addActivity(ids, activeUser.get());
         view.show("La actividad ha sido agregada correctamente al plan!");
     }
 
@@ -190,8 +200,7 @@ public class CommandLineInterface {
 
     private void listPlanes(Optional<User> activeUser){
         checkLoginStatus(activeUser);
-        view.show(LocalDate.now().toString());
-        this.planServices.listarPlanes();
+        this.planServices.listar();
     }
 
     private void checkLoginStatus (Optional<User> activeUser){
@@ -210,7 +219,7 @@ public class CommandLineInterface {
         checkLoginStatus(user);
         this.view.show("Introduzca el id del plan que quiere abandonar");
         Integer id = scanner.nextInt();
-        planServices.leftPlanById(user.get(), id);
+        planServices.leftById(user.get(), id);
         view.showBold("El usuario " + user.get().getNombreUsuario() + " ha abandonado el plan correctamente");
 
     }
@@ -222,7 +231,31 @@ public class CommandLineInterface {
     private void checkPlanCost (Scanner scanner, Optional<User> user){
         checkLoginStatus(user);
         Integer datos = scanner.nextInt();
-        this.view.show("Coste total del plan con id " + datos + ": " + planServices.checkPlanTotalCost(datos, user.get()));
+        this.view.show("Coste total del plan con id " + datos + ": " + planServices.checkTotalCost(datos, user.get()));
+
+    }
+
+    private void listTwoHoursDurationActivities (Optional<User> user){
+        checkLoginStatus(user);
+        List<Actividad> actividades = this.actividadServices.listarDuracionDosHoras();
+        showActivities(actividades);
+
+    }
+    private void activitiesTenEuroMaxCost (Optional<User> user){
+        checkLoginStatus(user);
+        List<Actividad> actividades = this.actividadServices.listarMaxCosteDiez();
+        showActivities(actividades);
+    }
+    private void showActivities (List<Actividad> actividades){
+        for (Actividad actividad : actividades){
+            view.show(actividad.toString());
+        }
+    }
+    private void activitiesPerType (Scanner scanner, Optional<User> user){
+        checkLoginStatus(user);
+        String type = scanner.next();
+        List<Actividad> actividades = actividadServices.listarTipo(type);
+        showActivities(actividades);
     }
 }
 
