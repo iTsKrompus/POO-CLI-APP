@@ -34,7 +34,7 @@ public class UserServices {
                 return user;
             }
         }
-        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
+        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos");
     }
 
 

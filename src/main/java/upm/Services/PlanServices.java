@@ -29,7 +29,7 @@ public class PlanServices {
         }
     }
 
-    public void listarPlanesSubscritos(String actualUser) {  //Por hacer
+    public void listarPlanesSubscritos(String actualUser) {
         for (Plan plan : planRepositoryInterface.findAll()) {
             for (User user : plan.getUserList()) {
                 if (user.getNombreUsuario().equals(actualUser)) {

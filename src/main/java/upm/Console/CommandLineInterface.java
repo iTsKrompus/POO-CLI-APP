@@ -79,6 +79,9 @@ public class CommandLineInterface {
             case LEFT_PLAN:
                 leftPlan(userContainer.getUser(), scanner);
                 break;
+            case SUBSCRIBED_PLANS_LIST:
+                subscribedPlanList(userContainer.getUser());
+                break;
             case HELP:
                 this.help();
                 break;
@@ -128,7 +131,9 @@ public class CommandLineInterface {
     private void createPlan(Scanner scanner, Optional<User> activeUser) {
         checkLoginStatus(activeUser);
         this.view.show("Introduzca los datos del plan a crear(nombre;fecha (yyyy-MM-dd);hora (HH:mm);lugarEncuentro;aforo): ");
-        String[] datos = scanner.next().split(";");
+
+        scanner.nextLine();
+        String[] datos = scanner.nextLine().split(";");
 
         if (datos.length != 5) {
             throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
@@ -139,6 +144,8 @@ public class CommandLineInterface {
 
         this.view.show(createdPlan.toString());
     }
+
+    private void addActivity(){} //Pendiente
 
     private void deletePlan(Scanner scanner, Optional<User> activeUser) {
         String datos = scanner.next();
@@ -187,6 +194,11 @@ public class CommandLineInterface {
         planServices.leftPlanById(user.get(), id);
         view.showBold("El usuario" + user.get().getNombreUsuario() + "ha abandonado el plan correctamente");
 
+    }
+    private void subscribedPlanList (Optional<User> user){
+        checkLoginStatus(user);
+        this.view.show("Planes a los que esta subscrito: ");
+        planServices.listarPlanesSubscritos(user.get().getNombreUsuario());
     }
 }
 

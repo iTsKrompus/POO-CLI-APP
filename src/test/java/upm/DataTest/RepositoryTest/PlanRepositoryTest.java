@@ -20,4 +20,5 @@ public class PlanRepositoryTest {
 
         assertTrue(planRepositoryInterface.read(5552).isEmpty());
     }
+
 }

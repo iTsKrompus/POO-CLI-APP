@@ -9,8 +9,10 @@ public enum CommandNames {
     CREATE_PLAN("create-plan", "      <nombre del plan> ; <fecha de inicio> ; <hora de comienzo> ; <lugar de encuentro> ; <aforo(0 para que no haya maximo)>"),
     DELETE_PLAN("delete-plan", "         <nombre del plan>"),
     PLANS_LIST("plans-list", "       lista los planes existentes"),
-    JOIN_PLAN("join-plan", "<planId>          Comando para unirse a un plan introduciendo su id"),
-    LEFT_PLAN("left-plan", "<planId>    Comando para abandonar un plan introduciendo su id"),
+    JOIN_PLAN("join-plan", "<   planId>          Comando para unirse a un plan introduciendo su id"),
+    LEFT_PLAN("left-plan", "   <planId>    Comando para abandonar un plan introduciendo su id"),
+    SUBSCRIBED_PLANS_LIST("subscribed-plans-list", "   muestra la lista de los planes a los que estas subscrito"),
+    CHECK_PLAN_COST("check-plan-cost", "    <planId>     Muestra el coste total del plan con todas sus actividades"),
     HELP("help", "             muestra la ayuda de todos los comandos disponibles"),
     EXIT("exit", "             termina la lectura de comandos(termina la ejecuccion del programa)");
 
