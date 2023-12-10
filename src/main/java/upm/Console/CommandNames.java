@@ -7,7 +7,9 @@ public enum CommandNames {
     USER_LOGOUT("logout", "           Cierra la sesion"),
     CREATE_ACTIVIDAD("create-activity", "  <tipo de actividad (generica/cine/teatro)> ; <nombre> ; <descripcion de la actividad> ; <duracion(minutos)> ; <coste> ; <aforo(0 para ilimitado)> Parametros a introducir para crear una actividad"),
     CREATE_PLAN("create-plan", "      <nombre del plan> ; <fecha de inicio> ; <hora de comienzo> ; <lugar de encuentro> ; <aforo(0 para que no haya maximo)>"),
-    DELETE_PLAN("delete-plan", "<nombre del plan>"),
+    DELETE_PLAN("delete-plan", "         <nombre del plan>"),
+    PLANS_LIST("plans-list", "       lista los planes existentes"),
+    JOIN_PLAN("join-plan", "<planId>          Comando para unirse a un plan introduciendo su id"),
     HELP("help", "             muestra la ayuda de todos los comandos disponibles"),
     EXIT("exit", "             termina la lectura de comandos(termina la ejecuccion del programa)");
 

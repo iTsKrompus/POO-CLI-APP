@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import upm.Data.Models.User;
 import upm.Data.Repositories.Repositories_Map.UserRepository;
+import upm.Data.Repositories.UserRepositoryInterface;
+import upm.DependencyInjector;
 
 import java.util.Optional;
 
@@ -11,15 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRepositoryTest {
 
-    private UserRepository userRepository;
+    private final UserRepositoryInterface userRepository = DependencyInjector   .getDependencyInjector().getUserRepositoryInterface();
     private User user;
 
-    @BeforeEach
-    void before() {
-        userRepository = new UserRepository();
-        user = new User("Hugo", 57, 629054242, "123");
-        userRepository.create(user);
-    }
+
 
     @Test
     public void isMobileUnicTestNo() {

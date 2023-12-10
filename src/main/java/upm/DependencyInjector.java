@@ -4,6 +4,7 @@ import upm.Console.CommandLineInterface;
 import upm.Console.ErrorHandler;
 import upm.Console.View;
 import upm.Data.Repositories.ActividadRepositoryInterface;
+import upm.Data.Repositories.AppSeeder;
 import upm.Data.Repositories.PlanRepositoryInterface;
 import upm.Data.Repositories.Repositories_Map.ActividadRepository;
 import upm.Data.Repositories.Repositories_Map.PlanRepository;
@@ -25,6 +26,7 @@ public class DependencyInjector {
     private final ActividadServices actividadServices;
     private final PlanServices planServices;
     private final UserContainer userContainer;
+    private final AppSeeder appSeeder;
 
     private DependencyInjector() {
         this.view = new View();
@@ -42,6 +44,9 @@ public class DependencyInjector {
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
 
         this.userContainer = new UserContainer();
+
+        this.appSeeder = new AppSeeder(this.planRepositoryInterface, this.userRepositoryInterface, this.actividadRepositoryInterface);
+        this.appSeeder.seed();
     }
 
     public static DependencyInjector getDependencyInjector() {
@@ -91,4 +96,6 @@ public class DependencyInjector {
     public UserContainer getUserContainer() {
         return this.userContainer;
     }
+
+    public AppSeeder getAppSeeder(){return  this.appSeeder; }
 }

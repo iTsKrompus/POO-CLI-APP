@@ -15,6 +15,8 @@ import upm.UserContainer;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -68,6 +70,12 @@ public class CommandLineInterface {
                 userLogout(userContainer.getUser());
                 userContainer.cleanUser();
                 break;
+            case PLANS_LIST:
+                listPlanes(userContainer.getUser());
+                break;
+            case JOIN_PLAN:
+
+                break;
             case HELP:
                 this.help();
                 break;
@@ -88,38 +96,42 @@ public class CommandLineInterface {
     }
 
     private void createActividad(Scanner scanner, Optional<User> activeUser) {
-        Actividad createdActividad;
-        if (activeUser.isEmpty()) {
-            throw new IllegalArgumentException("No puede crear actividades sin inicar sesión previamente");
-        }
+        checkLoginStatus(activeUser);
         this.view.show("Introduzca los datos de la actividad a crear(tipo;nombre;descripcion;duracion;coste;aforo): ");
         String[] datos = scanner.next().split(";");
-        if (datos.length != 5 && datos.length != 6) {
+        if (datos.length != 6) {
             throw new IllegalArgumentException(CommandNames.CREATE_ACTIVIDAD.getHelp());
         }
-        if (datos[0].equals("teatro")) {
-            createdActividad = actividadServices.create(new ActividadTeatro(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
-        } else if (datos[0].equals("cine")) {
-            createdActividad = actividadServices.create(new ActividadCine(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
-        } else if (datos[0].equals("generico")) {
-            createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
-        } else {
-            createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
-
-        }
+        Actividad createdActividad;
+        switch (datos[0]) {
+            case "teatro":
+                createdActividad = actividadServices.create(new ActividadTeatro(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+                break;
+            case "cine":
+                createdActividad = actividadServices.create(new ActividadCine(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+                break;
+            case "generico":
+                createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo de actividad no valido: " + datos[0]);     }
         this.view.show(createdActividad.toString());
     }
 
+
+
+
+
     private void createPlan(Scanner scanner, Optional<User> activeUser) {
-        if (activeUser.isEmpty()) {
-            throw new IllegalArgumentException("No puede crear planes sin iniciar sesión previamente");
-        }
-        this.view.show("Introduzca los datos del plan a crear(nombre;fecha;hora;lugarEncuentro;aforo): ");
+        checkLoginStatus(activeUser);
+        this.view.show("Introduzca los datos del plan a crear(nombre;fecha (yyyy-MM-dd);hora (HH:mm);lugarEncuentro;aforo): ");
         String[] datos = scanner.next().split(";");
+
         if (datos.length != 5) {
             throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
         }
-        Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1]), LocalTime.parse(datos[2]), datos[3], Integer.valueOf(datos[4])));
+
+        Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1], DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalTime.parse(datos[2], DateTimeFormatter.ofPattern("HH:mm")), datos[3], Integer.valueOf(datos[4])));
         createdPlan.setOwnerName(activeUser.get().getNombreUsuario());
 
         this.view.show(createdPlan.toString());
@@ -142,11 +154,26 @@ public class CommandLineInterface {
 
     }
 
-    private void userLogout(Optional<User> userName) {
-        if (userName.isEmpty()) {
-            throw new IllegalArgumentException("No puede cerrar sesión si no la ha iniciado primero");
+    private void userLogout(Optional<User> activeUser) {
+        checkLoginStatus(activeUser);
+        view.showBold("Adios " + activeUser.get().getNombreUsuario());
+    }
+
+    private void listPlanes(Optional<User> activeUser){
+        checkLoginStatus(activeUser);
+        view.show(LocalDate.now().toString());
+        this.planServices.listarPlanes();
+    }
+
+    private void checkLoginStatus (Optional<User> activeUser){
+        if (activeUser.isEmpty()) {
+            throw new IllegalArgumentException("Primero debe iniciar sesion para poder realizar alguna accion");
         }
-        view.showBold("Adios " + userName.get().getNombreUsuario());
+    }
+    private void joinPlan (Optional <User> user, int id){
+        checkLoginStatus(user);
+        planServices.joinPlanById(user.get(), id);
+        view.showBold("El usuario" + user.get().getNombreUsuario() + "se ha unido correctamente al plan!");
     }
 }
 

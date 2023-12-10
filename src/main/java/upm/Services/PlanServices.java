@@ -4,6 +4,10 @@ import upm.Data.Models.Plan;
 import upm.Data.Models.User;
 import upm.Data.Repositories.PlanRepositoryInterface;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
+
 
 public class PlanServices {
     private final PlanRepositoryInterface planRepositoryInterface;
@@ -19,7 +23,9 @@ public class PlanServices {
     public void listarPlanes() {
 
         for (Plan plan : planRepositoryInterface.findAll()) {
-            System.out.println(plan.toString());
+            if (plan.getFecha().isAfter(LocalDate.now()) || (plan.getFecha().isEqual(LocalDate.now()) && plan.getHoraInicio().isAfter(LocalTime.now()))) {
+                System.out.println(plan);
+            }
         }
     }
 
@@ -32,7 +38,25 @@ public class PlanServices {
             }
         }
 
+
     }
 
+    public void joinPlanById(User user, int id) {
+        Optional<Plan> plan = planRepositoryInterface.findById(id);
+        if (Optional.empty().isEmpty()) {
+            throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
+        }
+        if (plan.get().getUserList().contains(user)) {
+            throw new IllegalArgumentException("El usuario ya esta apuntado al plan con el id=" + id);
+        }
+        if (plan.get().getAforo() <= 0) {
+            throw new IllegalArgumentException("No es posible unirse al plan dado que el aforo esta completo");
+        }
+        plan.get().getUserList().add(user);
+        plan.get().setAforo(plan.get().getAforo() - 1);
+    }
 
+    public void leftPlanById (User user, int id) {
+        Optional<Plan> plan = planRepositoryInterface.findById(id);
+    }
 }

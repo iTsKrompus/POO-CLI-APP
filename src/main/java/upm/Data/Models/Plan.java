@@ -19,7 +19,7 @@ public class Plan {
     private Integer id;
     private String ownerName;
 
-    public Plan(String nombre, LocalDate fecha, LocalTime hora, String lugarEncuentro, Integer aforo) {
+    public Plan(String nombre, LocalDate fecha, LocalTime hora, String lugarEncuentro, int aforo) {
         this.nombre = nombre;
         this.fechaInicio = fecha;
         this.horaInicio = hora;
@@ -36,6 +36,10 @@ public class Plan {
 
     public LocalDate getFecha() {
         return fechaInicio;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
     }
 
     public String getLugarEncuentro() {
@@ -61,9 +65,8 @@ public class Plan {
                 ", fechaInicio=" + fechaInicio +
                 ", horaInicio=" + horaInicio +
                 ", lugarEncuentro='" + lugarEncuentro + '\'' +
-                ", actividadesList=" + actividadesList +
-                ", userList=" + userList +
                 ", aforo=" + aforo +
+                ", id=" + id +
                 '}';
     }
 
