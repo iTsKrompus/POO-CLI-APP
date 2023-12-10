@@ -43,20 +43,37 @@ public class PlanServices {
 
     public void joinPlanById(User user, int id) {
         Optional<Plan> plan = planRepositoryInterface.findById(id);
-        if (Optional.empty().isEmpty()) {
-            throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
-        }
+        checkIfPlanExist(plan,id);
+
         if (plan.get().getUserList().contains(user)) {
             throw new IllegalArgumentException("El usuario ya esta apuntado al plan con el id=" + id);
         }
+
         if (plan.get().getAforo() <= 0) {
             throw new IllegalArgumentException("No es posible unirse al plan dado que el aforo esta completo");
         }
+
         plan.get().getUserList().add(user);
         plan.get().setAforo(plan.get().getAforo() - 1);
     }
 
     public void leftPlanById (User user, int id) {
         Optional<Plan> plan = planRepositoryInterface.findById(id);
+        checkIfPlanExist(plan, id);
+
+        if (!(plan.get().getUserList().contains(user))){
+            throw new IllegalArgumentException("El usuario no esta apuntado al plan con id=" + id);
+        }
+
+        plan.get().getUserList().remove(user);
+        plan.get().setAforo(plan.get().getAforo() + 1);
+        }
+
+
+        private void checkIfPlanExist (Optional<Plan> plan, int id){
+            if (plan.isEmpty()) {
+                throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
+            }
+        }
     }
-}
+

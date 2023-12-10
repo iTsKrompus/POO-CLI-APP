@@ -29,7 +29,7 @@ public class AppSeeder {
                 new User("hugo", 19,676357373, "123"),
                 new User("pablo", 33, 747987496, "987"),
                 new User("Emilio", 79, 637945824, "111"),
-                new User("Alejandro", 57, 629054242, "123");
+                new User("Alejandro", 57, 629054242, "123")
         };
         for(User usersCreated : users){
             userRepositoryInterface.create(usersCreated);

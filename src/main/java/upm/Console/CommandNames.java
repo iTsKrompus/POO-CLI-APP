@@ -10,6 +10,7 @@ public enum CommandNames {
     DELETE_PLAN("delete-plan", "         <nombre del plan>"),
     PLANS_LIST("plans-list", "       lista los planes existentes"),
     JOIN_PLAN("join-plan", "<planId>          Comando para unirse a un plan introduciendo su id"),
+    LEFT_PLAN("left-plan", "<planId>    Comando para abandonar un plan introduciendo su id"),
     HELP("help", "             muestra la ayuda de todos los comandos disponibles"),
     EXIT("exit", "             termina la lectura de comandos(termina la ejecuccion del programa)");
 

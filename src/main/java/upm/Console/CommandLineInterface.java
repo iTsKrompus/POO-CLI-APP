@@ -74,7 +74,10 @@ public class CommandLineInterface {
                 listPlanes(userContainer.getUser());
                 break;
             case JOIN_PLAN:
-
+                joinPlan(userContainer.getUser(), scanner);
+                break;
+            case LEFT_PLAN:
+                leftPlan(userContainer.getUser(), scanner);
                 break;
             case HELP:
                 this.help();
@@ -170,10 +173,20 @@ public class CommandLineInterface {
             throw new IllegalArgumentException("Primero debe iniciar sesion para poder realizar alguna accion");
         }
     }
-    private void joinPlan (Optional <User> user, int id){
+    private void joinPlan (Optional <User> user, Scanner scanner){
         checkLoginStatus(user);
+        this.view.show("Introduzca el id del plan al que quiere unirse");
+        Integer id = scanner.nextInt();
         planServices.joinPlanById(user.get(), id);
         view.showBold("El usuario" + user.get().getNombreUsuario() + "se ha unido correctamente al plan!");
+    }
+    private void leftPlan (Optional<User> user, Scanner scanner){
+        checkLoginStatus(user);
+        this.view.show("Introduzca el id del plan que quiere abandonar");
+        Integer id = scanner.nextInt();
+        planServices.leftPlanById(user.get(), id);
+        view.showBold("El usuario" + user.get().getNombreUsuario() + "ha abandonado el plan correctamente");
+
     }
 }
 

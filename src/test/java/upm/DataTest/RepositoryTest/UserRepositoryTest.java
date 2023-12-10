@@ -9,36 +9,44 @@ import upm.DependencyInjector;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRepositoryTest {
 
     private final UserRepositoryInterface userRepository = DependencyInjector   .getDependencyInjector().getUserRepositoryInterface();
-    private User user;
-
 
 
     @Test
-    public void isMobileUnicTestNo() {
+    void testCreateAndRead() {
+        Optional<User> user = this.userRepository.read(1);
+        assertTrue(user.isPresent());
+        assertEquals("hugo", user.get().getNombreUsuario());
+    }
+
+    @Test
+    public void findByMobileSuccess() {
         Optional<User> result = userRepository.findByMobile(629054242);
         assertTrue(result.isPresent());
     }
 
     @Test
-    public void isMobileUnicTestYes() {
-        Optional<User> result = userRepository.findByMobile(629054242);
+    public void findByMobileNotExist() {
+        Optional<User> result = userRepository.findByMobile(26255453);
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void isNameUnicNo() {
-        Optional<User> result = userRepository.findByName("Hugo");
+    public void findByNameSuccess() {
+        Optional<User> result = userRepository.findByName("Alejandro");
         assertTrue(result.isPresent());
     }
 
     @Test
-    public void isNameUnicYes() {
+    public void findByNameNotExist() {
         Optional<User> result = userRepository.findByName("Santi");
         assertTrue(result.isEmpty());
     }
+
+
 }
