@@ -13,8 +13,8 @@ public class PlanServices {
     }
 
     public Plan create(Plan plan) {
-            return planRepositoryInterface.create(plan);
-        }
+        return planRepositoryInterface.create(plan);
+    }
 
     public void listarPlanes() {
 
@@ -27,7 +27,7 @@ public class PlanServices {
         for (Plan plan : planRepositoryInterface.findAll()) {
             for (User user : plan.getUserList()) {
                 if (user.getNombreUsuario().equals(actualUser)) {
-                    System.out.println(plan.toString());
+                    System.out.println(plan);
                 }
             }
         }

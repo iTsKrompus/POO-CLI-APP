@@ -62,7 +62,7 @@ public class CommandLineInterface {
                 this.createPlan(scanner, userContainer.getUser());
                 break;
             case USER_LOGIN:
-                 userContainer.setUser(userLogin(scanner));
+                userContainer.setUser(userLogin(scanner));
                 break;
             case USER_LOGOUT:
                 userLogout(userContainer.getUser());
@@ -89,10 +89,10 @@ public class CommandLineInterface {
 
     private void createActividad(Scanner scanner, Optional<User> activeUser) {
         Actividad createdActividad;
-        if(activeUser.isEmpty()){
+        if (activeUser.isEmpty()) {
             throw new IllegalArgumentException("No puede crear actividades sin inicar sesión previamente");
         }
-
+        this.view.show("Introduzca los datos de la actividad a crear(tipo;nombre;descripcion;duracion;coste;aforo): ");
         String[] datos = scanner.next().split(";");
         if (datos.length != 5 && datos.length != 6) {
             throw new IllegalArgumentException(CommandNames.CREATE_ACTIVIDAD.getHelp());
@@ -111,31 +111,39 @@ public class CommandLineInterface {
     }
 
     private void createPlan(Scanner scanner, Optional<User> activeUser) {
-       if(activeUser.isEmpty()){
-           throw new IllegalArgumentException("No puede crear planes sin iniciar sesión previamente");
-       }
-
+        if (activeUser.isEmpty()) {
+            throw new IllegalArgumentException("No puede crear planes sin iniciar sesión previamente");
+        }
+        this.view.show("Introduzca los datos del plan a crear(nombre;fecha;hora;lugarEncuentro;aforo): ");
         String[] datos = scanner.next().split(";");
-        if (datos.length != 7) {
+        if (datos.length != 5) {
             throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
         }
-        Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1]), LocalTime.parse(datos[2]), datos[3], Integer.parseInt(datos[4])));
+        Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1]), LocalTime.parse(datos[2]), datos[3], Integer.valueOf(datos[4])));
+        createdPlan.setOwnerName(activeUser.get().getNombreUsuario());
+
         this.view.show(createdPlan.toString());
+    }
+
+    private void deletePlan(Scanner scanner, Optional<User> activeUser) {
+        String datos = scanner.next();
+
     }
 
     private User userLogin(Scanner scanner) {
 
-            String[] datos = scanner.next().split(";");
-            if (datos.length != 2) {
-                throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
-            }
-            User userName = userServices.login(datos[0], datos[1]);
-            view.showBold("Bienvenido " + datos[0] + "!");
-            return userName;
+        String[] datos = scanner.next().split(";");
+        if (datos.length != 2) {
+            throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
+        }
+        User userName = userServices.login(datos[0], datos[1]);
+        view.showBold("Bienvenido " + datos[0] + "!");
+        return userName;
 
     }
-    private void userLogout(Optional<User> userName){
-        if (userName.isEmpty()){
+
+    private void userLogout(Optional<User> userName) {
+        if (userName.isEmpty()) {
             throw new IllegalArgumentException("No puede cerrar sesión si no la ha iniciado primero");
         }
         view.showBold("Adios " + userName.get().getNombreUsuario());

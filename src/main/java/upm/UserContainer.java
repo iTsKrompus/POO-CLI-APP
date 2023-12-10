@@ -11,13 +11,15 @@ public class UserContainer {
         this.user = Optional.empty();
     }
 
-    public Optional<User> getUser(){
+    public Optional<User> getUser() {
         return this.user;
     }
-    public void setUser(User user){
+
+    public void setUser(User user) {
         this.user = Optional.of(user);
     }
-    public void cleanUser(){
+
+    public void cleanUser() {
         this.user = Optional.empty();
     }
 }

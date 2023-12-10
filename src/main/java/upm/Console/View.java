@@ -12,16 +12,19 @@ public class View {
 
     public static final String BACKGROUND_RED = "\u001B[41m";
 
-    public void show(String message){
-        System.out.println(View.BLUE +" " + message + " " + View.RESET);
+    public void show(String message) {
+        System.out.println(View.BLUE + " " + message + " " + View.RESET);
     }
-    public void showBold(String message){
+
+    public void showBold(String message) {
         System.out.println((View.PURPLE + " " + message + " " + View.RESET));
     }
-    public void showError(String message){
+
+    public void showError(String message) {
         System.out.println(BACKGROUND_RED + View.BLACK + " " + message + " " + View.RESET);
     }
-    public void showCommand(){
+
+    public void showCommand() {
         System.out.print(COMMAND);
     }
 

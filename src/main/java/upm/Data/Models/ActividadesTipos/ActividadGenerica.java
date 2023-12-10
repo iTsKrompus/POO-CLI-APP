@@ -1,6 +1,7 @@
 package upm.Data.Models.ActividadesTipos;
 
 import upm.Data.Models.Actividad;
+
 import java.time.Duration;
 
 

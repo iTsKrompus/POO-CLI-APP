@@ -4,14 +4,14 @@ import java.time.Duration;
 import java.util.Objects;
 
 public abstract class Actividad {
-    private  String tipo;
+    protected static final double DTO_JOVEN = 0.5;
     private final String nombre;
+    private String tipo;
     private final String descripcion;
     private final Duration duracion;
     private int aforo;
     private double coste;
     private Integer id;
-    protected static final double DTO_JOVEN = 0.5;
 
 
     public Actividad(String tipo, String nombre, String descripcion, Duration duracion, double coste, int aforo) {
@@ -25,6 +25,13 @@ public abstract class Actividad {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        if (!tipo.equals("generica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
+            throw new IllegalArgumentException("Tipo de actividad no existente");
+        }
+        this.tipo = tipo;
     }
 
     public String getNombre() {
@@ -42,8 +49,9 @@ public abstract class Actividad {
     public double getCoste() {
         return coste;
     }
-    public void setCoste(double coste){
-        this.coste=coste;
+
+    public void setCoste(double coste) {
+        this.coste = coste;
     }
 
     public int getAforo() {
@@ -55,12 +63,6 @@ public abstract class Actividad {
             aforo = Integer.MAX_VALUE;
         }
         this.aforo = aforo;
-    }
-    public void setTipo(String tipo){
-        if(!tipo.equals("genérica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))){
-            throw new IllegalArgumentException("Tipo de actividad no existente");
-        }
-        this.tipo = tipo;
     }
 
     public Integer getId() {
@@ -77,7 +79,7 @@ public abstract class Actividad {
                 "tipo='" + tipo + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", duracion=" + duracion +
+                ", duracion=" + duracion.toMinutes() +
                 ", coste=" + coste +
                 ", aforo=" + aforo +
                 '}';
@@ -94,4 +96,6 @@ public abstract class Actividad {
     }
 
     public abstract double aplicarDto(int edad);
+
+
 }

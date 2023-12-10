@@ -17,6 +17,7 @@ public class Plan {
     private final List<User> userList;
     private Integer aforo;
     private Integer id;
+    private String ownerName;
 
     public Plan(String nombre, LocalDate fecha, LocalTime hora, String lugarEncuentro, Integer aforo) {
         this.nombre = nombre;
@@ -118,5 +119,13 @@ public class Plan {
             totalCost += act.getCoste();
         }
         return totalCost;
+    }
+
+    public String getOwnerName() {
+        return this.ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

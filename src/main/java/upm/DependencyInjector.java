@@ -26,7 +26,7 @@ public class DependencyInjector {
     private final PlanServices planServices;
     private final UserContainer userContainer;
 
-    private DependencyInjector(){
+    private DependencyInjector() {
         this.view = new View();
 
         this.userRepositoryInterface = new UserRepository();
@@ -37,14 +37,18 @@ public class DependencyInjector {
         this.actividadServices = new ActividadServices(this.actividadRepositoryInterface);
         this.planServices = new PlanServices(this.planRepositoryInterface);
 
-       this.commandLineInterface = new CommandLineInterface(this.view, this.planServices, this.userServices, this.actividadServices);
+        this.commandLineInterface = new CommandLineInterface(this.view, this.planServices, this.userServices, this.actividadServices);
 
-       this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+        this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
 
-       this.userContainer = new UserContainer();
+        this.userContainer = new UserContainer();
     }
 
-    public void run(){
+    public static DependencyInjector getDependencyInjector() {
+        return dependencyInjector;
+    }
+
+    public void run() {
         this.errorHandler.handlesErrors(dependencyInjector);
     }
 
@@ -83,10 +87,8 @@ public class DependencyInjector {
     public PlanServices getPlanServices() {
         return planServices;
     }
-    public UserContainer getUserContainer(){
+
+    public UserContainer getUserContainer() {
         return this.userContainer;
-    }
-    public static DependencyInjector getDependencyInjector(){
-        return dependencyInjector;
     }
 }

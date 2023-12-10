@@ -53,7 +53,8 @@ public class User {
         }
         this.password = password;
     }
-    public void setId(Integer id){
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -76,7 +77,6 @@ public class User {
     public boolean equals(Object user) {
         return this == user || user != null && getClass() == user.getClass() && (this.equals(((User) user).id));
     }
-
 
 
 }

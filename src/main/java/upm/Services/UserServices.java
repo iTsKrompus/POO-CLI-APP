@@ -25,17 +25,18 @@ public class UserServices {
         }
         return userRepositoryInterface.create(user);
     }
-    public User login (String name, String password){
+
+    public User login(String name, String password) {
         Optional<User> userOptional = userRepositoryInterface.findByName(name);
-            if (userOptional.isPresent()){
-               User user = userOptional.get();
-               if(user.getPassword().equals(password)) {
-                   return user;
-               }
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getPassword().equals(password)) {
+                return user;
             }
-        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
         }
-
-
+        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos\n");
     }
+
+
+}
 
