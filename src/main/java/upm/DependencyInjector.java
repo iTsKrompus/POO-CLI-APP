@@ -37,7 +37,7 @@ public class DependencyInjector {
 
         this.userServices = new UserServices(this.userRepositoryInterface, this.planRepositoryInterface);
         this.actividadServices = new ActividadServices(this.actividadRepositoryInterface);
-        this.planServices = new PlanServices(this.planRepositoryInterface);
+        this.planServices = new PlanServices(this.planRepositoryInterface, this.actividadRepositoryInterface);
 
         this.commandLineInterface = new CommandLineInterface(this.view, this.planServices, this.userServices, this.actividadServices);
 

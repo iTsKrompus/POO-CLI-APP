@@ -63,6 +63,9 @@ public class CommandLineInterface {
             case CREATE_PLAN:
                 this.createPlan(scanner, userContainer.getUser());
                 break;
+            case DELETE_PLAN:
+                this.deletePlan(scanner, userContainer.getUser());
+                break;
             case USER_LOGIN:
                 userContainer.setUser(userLogin(scanner));
                 break;
@@ -81,6 +84,12 @@ public class CommandLineInterface {
                 break;
             case SUBSCRIBED_PLANS_LIST:
                 subscribedPlanList(userContainer.getUser());
+                break;
+            case ADD_ACTIVIDAD_TO_PLAN:
+                addActivityToPlan(scanner, userContainer.getUser());
+                break;
+            case CHECK_PLAN_COST:
+                checkPlanCost(scanner, userContainer.getUser());
                 break;
             case HELP:
                 this.help();
@@ -145,11 +154,21 @@ public class CommandLineInterface {
         this.view.show(createdPlan.toString());
     }
 
-    private void addActivity(){} //Pendiente
+    private void addActivityToPlan(Scanner scanner, Optional<User> activeUser){
+        checkLoginStatus(activeUser);
+        String[] datos = scanner.next().split(";");
+        if (datos.length != 2) {
+           throw new IllegalArgumentException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
+        }
+        Integer [] ids = new Integer[] {Integer.parseInt(datos[0]), Integer.parseInt(datos[1])};
+        planServices.addActivityToPlan(ids, activeUser.get());
+        view.show("La actividad ha sido agregada correctamente al plan!");
+    }
 
     private void deletePlan(Scanner scanner, Optional<User> activeUser) {
-        String datos = scanner.next();
-
+        Integer datos = scanner.nextInt();
+        planServices.delete(datos, activeUser.get());
+        view.show("El plan ha sido borrado correctamente!");
     }
 
     private User userLogin(Scanner scanner) {
@@ -185,20 +204,25 @@ public class CommandLineInterface {
         this.view.show("Introduzca el id del plan al que quiere unirse");
         Integer id = scanner.nextInt();
         planServices.joinPlanById(user.get(), id);
-        view.showBold("El usuario" + user.get().getNombreUsuario() + "se ha unido correctamente al plan!");
+        view.showBold("El usuario " + user.get().getNombreUsuario() + " se ha unido correctamente al plan!");
     }
     private void leftPlan (Optional<User> user, Scanner scanner){
         checkLoginStatus(user);
         this.view.show("Introduzca el id del plan que quiere abandonar");
         Integer id = scanner.nextInt();
         planServices.leftPlanById(user.get(), id);
-        view.showBold("El usuario" + user.get().getNombreUsuario() + "ha abandonado el plan correctamente");
+        view.showBold("El usuario " + user.get().getNombreUsuario() + " ha abandonado el plan correctamente");
 
     }
     private void subscribedPlanList (Optional<User> user){
         checkLoginStatus(user);
         this.view.show("Planes a los que esta subscrito: ");
         planServices.listarPlanesSubscritos(user.get().getNombreUsuario());
+    }
+    private void checkPlanCost (Scanner scanner, Optional<User> user){
+        checkLoginStatus(user);
+        Integer datos = scanner.nextInt();
+        this.view.show("Coste total del plan con id " + datos + ": " + planServices.checkPlanTotalCost(datos, user.get()));
     }
 }
 

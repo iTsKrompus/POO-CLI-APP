@@ -8,6 +8,7 @@ public enum CommandNames {
     CREATE_ACTIVIDAD("create-activity", "  <tipo de actividad (generica/cine/teatro)> ; <nombre> ; <descripcion de la actividad> ; <duracion(minutos)> ; <coste> ; <aforo(0 para ilimitado)> Parametros a introducir para crear una actividad"),
     CREATE_PLAN("create-plan", "      <nombre del plan> ; <fecha de inicio> ; <hora de comienzo> ; <lugar de encuentro> ; <aforo(0 para que no haya maximo)>"),
     DELETE_PLAN("delete-plan", "         <nombre del plan>"),
+    ADD_ACTIVIDAD_TO_PLAN ("add-activity-to-plan", "    <idActivity> ; <idPlan>   Agrega una actividad a un plan ya existente"),
     PLANS_LIST("plans-list", "       lista los planes existentes"),
     JOIN_PLAN("join-plan", "<   planId>          Comando para unirse a un plan introduciendo su id"),
     LEFT_PLAN("left-plan", "   <planId>    Comando para abandonar un plan introduciendo su id"),

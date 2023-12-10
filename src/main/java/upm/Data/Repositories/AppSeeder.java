@@ -47,6 +47,13 @@ public class AppSeeder {
                 new Plan("Villaverde party", LocalDate.of(2024, 12, 10), LocalTime.of(10, 30), "puente de vallecas", 0),
                 new Plan("Bamboreal", LocalDate.of(2026, 12, 10), LocalTime.of(19, 30), "italia torre de pizza", 1)
         };
+        planes[0].setOwnerName("pablo");
+
+        planes[1].setOwnerName("hugo");
+        planes[1].addActividad(actividades[2]);
+        planes[1].addActividad(actividades[1]);
+
+        planes[2].setOwnerName("hugo");
         for(Plan planCreated : planes){
             planRepositoryInterface.create(planCreated);
         }

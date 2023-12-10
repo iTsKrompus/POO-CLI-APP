@@ -116,10 +116,10 @@ public class Plan {
         return totalTime;
     }
 
-    public double totalCost() {
+    public double totalCost(int edad) {
         double totalCost = 0.0;
         for (Actividad act : getActividades()) {
-            totalCost += act.getCoste();
+            totalCost += act.aplicarDto(edad);
         }
         return totalCost;
     }
