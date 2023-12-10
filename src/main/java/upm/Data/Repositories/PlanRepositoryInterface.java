@@ -6,5 +6,5 @@ import java.util.Optional;
 
 
 public interface PlanRepositoryInterface extends GenericRepositoryInterface<Plan> {
-    Optional<Plan> findById (int id);
+
 }

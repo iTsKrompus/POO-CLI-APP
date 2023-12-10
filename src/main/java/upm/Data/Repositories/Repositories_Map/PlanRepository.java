@@ -17,13 +17,5 @@ public class PlanRepository extends GenericRepository<Plan> implements PlanRepos
         return plan.getId();
     }
 
-    @Override
-    public Optional<Plan> findById (int id){
-        for (Plan plan : findAll()){
-            if (plan.getId() == id){
-                return Optional.of(plan);
-            }
-        }
-        return Optional.empty();
-    }
+
 }

@@ -42,7 +42,7 @@ public class PlanServices {
     }
 
     public void joinPlanById(User user, int id) {
-        Optional<Plan> plan = planRepositoryInterface.findById(id);
+        Optional<Plan> plan = planRepositoryInterface.read(id);
         checkIfPlanExist(plan,id);
 
         if (plan.get().getUserList().contains(user)) {
@@ -58,7 +58,7 @@ public class PlanServices {
     }
 
     public void leftPlanById (User user, int id) {
-        Optional<Plan> plan = planRepositoryInterface.findById(id);
+        Optional<Plan> plan = planRepositoryInterface.read(id);
         checkIfPlanExist(plan, id);
 
         if (!(plan.get().getUserList().contains(user))){

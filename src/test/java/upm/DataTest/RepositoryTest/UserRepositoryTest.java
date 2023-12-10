@@ -9,8 +9,7 @@ import upm.DependencyInjector;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserRepositoryTest {
 
@@ -47,6 +46,20 @@ public class UserRepositoryTest {
         Optional<User> result = userRepository.findByName("Santi");
         assertTrue(result.isEmpty());
     }
+    @Test
+    public void testDelete(){
+        User user = new User ("babuino", 35, 532625, "777");
+        User confirmUser = userRepository.create(user);
+        userRepository.delete(confirmUser.getId());
+        assertFalse(this.userRepository.read(confirmUser.getId()).isPresent());
+    }
 
+    @Test
+    public void testUpdate(){
+        User user = userRepository.read(1).get();
 
+        user.setEdad(36);
+        userRepository.update(user);
+        assertTrue(userRepository.read(1).get().getEdad() == 36);
+    }
 }
