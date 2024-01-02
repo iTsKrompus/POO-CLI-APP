@@ -16,7 +16,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -226,7 +225,8 @@ public class CommandLineInterface {
     private void subscribedPlanList (Optional<User> user){
         checkLoginStatus(user);
         this.view.show("Planes a los que esta subscrito: ");
-        planServices.listarPlanesSubscritos(user.get().getNombreUsuario());
+       List<Plan> planes =  planServices.listarSubscritos(user.get().getNombreUsuario());
+
     }
     private void checkPlanCost (Scanner scanner, Optional<User> user){
         checkLoginStatus(user);
@@ -238,25 +238,27 @@ public class CommandLineInterface {
     private void listTwoHoursDurationActivities (Optional<User> user){
         checkLoginStatus(user);
         List<Actividad> actividades = this.actividadServices.listarDuracionDosHoras();
-        showActivities(actividades);
+        showLists(actividades);
 
     }
     private void activitiesTenEuroMaxCost (Optional<User> user){
         checkLoginStatus(user);
         List<Actividad> actividades = this.actividadServices.listarMaxCosteDiez();
-        showActivities(actividades);
-    }
-    private void showActivities (List<Actividad> actividades){
-        for (Actividad actividad : actividades){
-            view.show(actividad.toString());
-        }
-    }
+        showLists(actividades);
+     }
+
     private void activitiesPerType (Scanner scanner, Optional<User> user){
         checkLoginStatus(user);
         String type = scanner.next();
         List<Actividad> actividades = actividadServices.listarTipo(type);
-        showActivities(actividades);
+        showLists(actividades);
     }
+
+    private void showLists(List<Actividad> actividades){
+        ShowObject<Actividad> results= new ShowObject<Actividad>();
+        results.showListInformation(actividades);
+    }
+
 }
 
 

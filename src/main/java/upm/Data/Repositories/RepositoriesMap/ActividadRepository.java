@@ -1,4 +1,4 @@
-package upm.Data.Repositories.Repositories_Map;
+package upm.Data.Repositories.RepositoriesMap;
 
 import upm.Data.Models.Actividad;
 import upm.Data.Repositories.ActividadRepositoryInterface;

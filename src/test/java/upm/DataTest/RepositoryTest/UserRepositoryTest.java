@@ -1,9 +1,7 @@
 package upm.DataTest.RepositoryTest;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import upm.Data.Models.User;
-import upm.Data.Repositories.Repositories_Map.UserRepository;
 import upm.Data.Repositories.UserRepositoryInterface;
 import upm.DependencyInjector;
 

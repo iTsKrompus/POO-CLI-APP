@@ -1,9 +1,7 @@
-package upm.Data.Repositories.Repositories_Map;
+package upm.Data.Repositories.RepositoriesMap;
 
 import upm.Data.Models.Plan;
 import upm.Data.Repositories.PlanRepositoryInterface;
-
-import java.util.Optional;
 
 public class PlanRepository extends GenericRepository<Plan> implements PlanRepositoryInterface {
 

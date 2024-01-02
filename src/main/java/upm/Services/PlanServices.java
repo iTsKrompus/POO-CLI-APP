@@ -7,6 +7,8 @@ import upm.Data.Repositories.PlanRepositoryInterface;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -39,15 +41,16 @@ public class PlanServices {
         }
     }
 
-    public void listarPlanesSubscritos(String actualUser) {
+    public List<Plan> listarSubscritos(String actualUser) {
+        List<Plan> planes = new ArrayList<>();
         for (Plan plan : planRepositoryInterface.findAll()) {
             for (User user : plan.getUserList()) {
                 if (user.getNombreUsuario().equals(actualUser)) {
-                    System.out.println(plan);
+                    planes.add(plan);
                 }
             }
         }
-
+        return planes;
 
     }
 
