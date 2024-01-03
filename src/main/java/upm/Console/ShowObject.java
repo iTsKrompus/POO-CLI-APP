@@ -3,9 +3,10 @@ package upm.Console;
 import java.util.List;
 
 public class ShowObject<T> {
-    private View view;
+    private final View view;
 
-     ShowObject () {
+     ShowObject (View view) {
+         this.view = view;
     }
 
     public void showInformation (T object){

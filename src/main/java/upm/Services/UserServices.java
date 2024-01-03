@@ -10,11 +10,9 @@ public class UserServices {
 
 
     private final UserRepositoryInterface userRepositoryInterface;
-    private final PlanRepositoryInterface planRepositoryInterface;
 
     public UserServices(UserRepositoryInterface userRepositoryInterface, PlanRepositoryInterface planRepositoryInterface) {
         this.userRepositoryInterface = userRepositoryInterface;
-        this.planRepositoryInterface = planRepositoryInterface;
     }
 
     public User create(User user) {

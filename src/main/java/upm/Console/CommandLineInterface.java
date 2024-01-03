@@ -249,13 +249,14 @@ public class CommandLineInterface {
 
     private void activitiesPerType (Scanner scanner, Optional<User> user){
         checkLoginStatus(user);
+        view.showBold("Tipo de actividad: ");
         String type = scanner.next();
         List<Actividad> actividades = actividadServices.listarTipo(type);
         showLists(actividades);
     }
 
     private void showLists(List<Actividad> actividades){
-        ShowObject<Actividad> results= new ShowObject<Actividad>();
+        ShowObject<Actividad> results= new ShowObject<Actividad>(view);
         results.showListInformation(actividades);
     }
 
