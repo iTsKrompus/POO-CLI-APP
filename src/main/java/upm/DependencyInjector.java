@@ -97,5 +97,7 @@ public class DependencyInjector {
         return this.userContainer;
     }
 
-    public AppSeeder getAppSeeder(){return  this.appSeeder; }
+    public AppSeeder getAppSeeder() {
+        return this.appSeeder;
+    }
 }

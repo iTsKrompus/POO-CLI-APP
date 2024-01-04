@@ -65,7 +65,7 @@ public class PlanServices {
         if (plan.get().getAforo() <= 0) {
             throw new IllegalArgumentException("No es posible unirse al plan dado que el aforo esta completo");
         }
-        if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))){
+        if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))) {
             throw new IllegalArgumentException(("No es posible unirse a un plan que ya ha ocurrido"));
         }
 
@@ -73,53 +73,56 @@ public class PlanServices {
         plan.get().setAforo(plan.get().getAforo() - 1);
     }
 
-    public void leftById (User user, int id) {
+    public void leftById(User user, int id) {
         Optional<Plan> plan = planRepositoryInterface.read(id);
         checkIfExist(plan);
         findUserIsntSubscribed(plan.get(), user);
 
-        if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))){
+        if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))) {
             throw new IllegalArgumentException(("No es posible abandonar un plan que ya ha ocurrido"));
         }
 
         plan.get().getUserList().remove(user);
         plan.get().setAforo(plan.get().getAforo() + 1);
+    }
+
+    private void findUserIsntSubscribed(Plan plan, User user) {
+        if (!(plan.getUserList().contains(user))) {
+            throw new IllegalArgumentException("El usuario no esta apuntado al plan");
         }
-        private void findUserIsntSubscribed (Plan plan, User user){
-            if (!(plan.getUserList().contains(user))){
-                throw new IllegalArgumentException("El usuario no esta apuntado al plan");
-            }
-        }
+    }
 
 
-        private void checkIfExist (Optional<Plan> plan){
-            if (plan.isEmpty()) {
-                throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
-            }
+    private void checkIfExist(Optional<Plan> plan) {
+        if (plan.isEmpty()) {
+            throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
         }
+    }
 
-        public void addActivity (Integer [] ids, User activeUser) {
-            Optional<Plan> plan = planRepositoryInterface.read(ids[1]);
-            checkIfExist(plan);
-            checkOwner(plan.get(), activeUser);
-            if (actividadRepositoryInterface.read(ids[0]).isEmpty()) {
-                throw new IllegalArgumentException("La actividad con el id:" + ids[0] + " no se ha encontrado");
-            }
-            plan.get().addActividad(actividadRepositoryInterface.read(ids[0]).get());
-            planRepositoryInterface.update(plan.get());
+    public void addActivity(Integer[] ids, User activeUser) {
+        Optional<Plan> plan = planRepositoryInterface.read(ids[1]);
+        checkIfExist(plan);
+        checkOwner(plan.get(), activeUser);
+        if (actividadRepositoryInterface.read(ids[0]).isEmpty()) {
+            throw new IllegalArgumentException("La actividad con el id:" + ids[0] + " no se ha encontrado");
         }
-        private void checkOwner (Plan plan, User activeUser){
-               if (!(plan.getOwnerName().equals(activeUser.getNombreUsuario()))){
-                   throw new IllegalArgumentException("Solo el propietario puede modificar/eliminar el plan");
-               }
-           }
-           public double checkTotalCost (Integer id, User activeUser){
-              Optional<Plan> plan = planRepositoryInterface.read(id);
-              checkIfExist(plan);
-              findUserIsntSubscribed(plan.get(), activeUser);
+        plan.get().addActividad(actividadRepositoryInterface.read(ids[0]).get());
+        planRepositoryInterface.update(plan.get());
+    }
 
-              return plan.get().totalCost(activeUser.getEdad());
-           }
-
+    private void checkOwner(Plan plan, User activeUser) {
+        if (!(plan.getOwnerName().equals(activeUser.getNombreUsuario()))) {
+            throw new IllegalArgumentException("Solo el propietario puede modificar/eliminar el plan");
         }
+    }
+
+    public double checkTotalCost(Integer id, User activeUser) {
+        Optional<Plan> plan = planRepositoryInterface.read(id);
+        checkIfExist(plan);
+        findUserIsntSubscribed(plan.get(), activeUser);
+
+        return plan.get().totalCost(activeUser.getEdad());
+    }
+
+}
 

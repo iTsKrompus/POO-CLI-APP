@@ -11,6 +11,7 @@ public class ActividadCine extends Actividad {
     public ActividadCine(String tipo, String nombre, String descripcion, Duration duracion, double coste, int aforo) {
         super("cine", nombre, descripcion, duracion, coste, aforo);
     }
+
     @Override
     public double aplicarDto(int edad) {
         double dto = 1.0;

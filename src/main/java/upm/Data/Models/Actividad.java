@@ -6,9 +6,9 @@ import java.util.Objects;
 public abstract class Actividad {
     protected static final double DTO_JOVEN = 0.5;
     private final String nombre;
-    private String tipo;
     private final String descripcion;
     private final Duration duracion;
+    private String tipo;
     private int aforo;
     private double coste;
     private Integer id;

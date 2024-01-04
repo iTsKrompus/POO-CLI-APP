@@ -1,7 +1,6 @@
 package upm.Services;
 
 import upm.Data.Models.Actividad;
-import upm.Data.Models.User;
 import upm.Data.Repositories.ActividadRepositoryInterface;
 
 import java.util.ArrayList;
@@ -19,28 +18,31 @@ public class ActividadServices {
         return actividadRepositoryInterface.create(actividad);
 
     }
-    public List<Actividad> listarDuracionDosHoras (){
+
+    public List<Actividad> listarDuracionDosHoras() {
         List<Actividad> actividades = new ArrayList<Actividad>();
-        for (Actividad actividad : actividadRepositoryInterface.findAll()){
-            if (actividad.getDuracion().toMinutes() >= 120){
+        for (Actividad actividad : actividadRepositoryInterface.findAll()) {
+            if (actividad.getDuracion().toMinutes() >= 120) {
                 actividades.add(actividad);
             }
         }
         return actividades;
     }
-    public List<Actividad> listarMaxCosteDiez (){
+
+    public List<Actividad> listarMaxCosteDiez() {
         List<Actividad> actividades = new ArrayList<Actividad>();
-        for (Actividad actividad : actividadRepositoryInterface.findAll()){
-            if (actividad.getCoste() <= 10){
+        for (Actividad actividad : actividadRepositoryInterface.findAll()) {
+            if (actividad.getCoste() <= 10) {
                 actividades.add(actividad);
             }
         }
         return actividades;
     }
-    public List<Actividad> listarTipo (String tipo){
+
+    public List<Actividad> listarTipo(String tipo) {
         List<Actividad> actividades = new ArrayList<Actividad>();
-        for (Actividad actividad : actividadRepositoryInterface.findAll()){
-            if (actividad.getTipo().equals(tipo)){
+        for (Actividad actividad : actividadRepositoryInterface.findAll()) {
+            if (actividad.getTipo().equals(tipo)) {
                 actividades.add(actividad);
             }
         }

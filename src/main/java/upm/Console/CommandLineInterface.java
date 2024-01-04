@@ -138,12 +138,10 @@ public class CommandLineInterface {
                 createdActividad = actividadServices.create(new ActividadGenerica(datos[0], datos[1], datos[2], Duration.ofMinutes(Integer.parseInt(datos[3])), Double.valueOf(datos[4]), Integer.valueOf(datos[5])));
                 break;
             default:
-                throw new IllegalArgumentException("Tipo de actividad no valido: " + datos[0]);     }
+                throw new IllegalArgumentException("Tipo de actividad no valido: " + datos[0]);
+        }
         this.view.show(createdActividad.toString());
     }
-
-
-
 
 
     private void createPlan(Scanner scanner, Optional<User> activeUser) {
@@ -163,13 +161,13 @@ public class CommandLineInterface {
         this.view.show(createdPlan.toString());
     }
 
-    private void addActivityToPlan(Scanner scanner, Optional<User> activeUser){
+    private void addActivityToPlan(Scanner scanner, Optional<User> activeUser) {
         checkLoginStatus(activeUser);
         String[] datos = scanner.next().split(";");
         if (datos.length != 2) {
-           throw new IllegalArgumentException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
+            throw new IllegalArgumentException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
         }
-        Integer [] ids = new Integer[] {Integer.parseInt(datos[0]), Integer.parseInt(datos[1])};
+        Integer[] ids = new Integer[]{Integer.parseInt(datos[0]), Integer.parseInt(datos[1])};
         planServices.addActivity(ids, activeUser.get());
         view.show("La actividad ha sido agregada correctamente al plan!");
     }
@@ -197,24 +195,26 @@ public class CommandLineInterface {
         view.showBold("Adios " + activeUser.get().getNombreUsuario());
     }
 
-    private void listPlanes(Optional<User> activeUser){
+    private void listPlanes(Optional<User> activeUser) {
         checkLoginStatus(activeUser);
         this.planServices.listar();
     }
 
-    private void checkLoginStatus (Optional<User> activeUser){
+    private void checkLoginStatus(Optional<User> activeUser) {
         if (activeUser.isEmpty()) {
             throw new IllegalArgumentException("Primero debe iniciar sesion para poder realizar alguna accion");
         }
     }
-    private void joinPlan (Optional <User> user, Scanner scanner){
+
+    private void joinPlan(Optional<User> user, Scanner scanner) {
         checkLoginStatus(user);
         this.view.show("Introduzca el id del plan al que quiere unirse");
         Integer id = scanner.nextInt();
         planServices.joinPlanById(user.get(), id);
         view.showBold("El usuario " + user.get().getNombreUsuario() + " se ha unido correctamente al plan!");
     }
-    private void leftPlan (Optional<User> user, Scanner scanner){
+
+    private void leftPlan(Optional<User> user, Scanner scanner) {
         checkLoginStatus(user);
         this.view.show("Introduzca el id del plan que quiere abandonar");
         Integer id = scanner.nextInt();
@@ -222,32 +222,35 @@ public class CommandLineInterface {
         view.showBold("El usuario " + user.get().getNombreUsuario() + " ha abandonado el plan correctamente");
 
     }
-    private void subscribedPlanList (Optional<User> user){
+
+    private void subscribedPlanList(Optional<User> user) {
         checkLoginStatus(user);
         this.view.show("Planes a los que esta subscrito: ");
-       List<Plan> planes =  planServices.listarSubscritos(user.get().getNombreUsuario());
+        List<Plan> planes = planServices.listarSubscritos(user.get().getNombreUsuario());
 
     }
-    private void checkPlanCost (Scanner scanner, Optional<User> user){
+
+    private void checkPlanCost(Scanner scanner, Optional<User> user) {
         checkLoginStatus(user);
         Integer datos = scanner.nextInt();
         this.view.show("Coste total del plan con id " + datos + ": " + planServices.checkTotalCost(datos, user.get()));
 
     }
 
-    private void listTwoHoursDurationActivities (Optional<User> user){
+    private void listTwoHoursDurationActivities(Optional<User> user) {
         checkLoginStatus(user);
         List<Actividad> actividades = this.actividadServices.listarDuracionDosHoras();
         showLists(actividades);
 
     }
-    private void activitiesTenEuroMaxCost (Optional<User> user){
+
+    private void activitiesTenEuroMaxCost(Optional<User> user) {
         checkLoginStatus(user);
         List<Actividad> actividades = this.actividadServices.listarMaxCosteDiez();
         showLists(actividades);
-     }
+    }
 
-    private void activitiesPerType (Scanner scanner, Optional<User> user){
+    private void activitiesPerType(Scanner scanner, Optional<User> user) {
         checkLoginStatus(user);
         view.showBold("Tipo de actividad: ");
         String type = scanner.next();
@@ -255,8 +258,8 @@ public class CommandLineInterface {
         showLists(actividades);
     }
 
-    private void showLists(List<Actividad> actividades){
-        ShowObject<Actividad> results= new ShowObject<Actividad>(view);
+    private void showLists(List<Actividad> actividades) {
+        ShowObject<Actividad> results = new ShowObject<Actividad>(view);
         results.showListInformation(actividades);
     }
 
