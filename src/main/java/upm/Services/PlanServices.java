@@ -4,13 +4,13 @@ import upm.Data.Models.Plan;
 import upm.Data.Models.User;
 import upm.Data.Repositories.ActividadRepositoryInterface;
 import upm.Data.Repositories.PlanRepositoryInterface;
+import upm.InvalidObjectException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 
 public class PlanServices {
@@ -67,7 +67,7 @@ public class PlanServices {
             throw new IllegalArgumentException("No es posible unirse al plan dado que el aforo esta completo");
         }
         if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))) {
-            throw new IllegalArgumentException(("No es posible unirse a un plan que ya ha ocurrido"));
+            throw new InvalidDateException(("No es posible unirse a un plan que ya ha ocurrido"));
         }
 
         plan.get().getUserList().add(user);
@@ -80,7 +80,7 @@ public class PlanServices {
         findUserIsntSubscribed(plan.get(), user);
 
         if (plan.get().getFecha().isBefore(LocalDate.now()) || (plan.get().getFecha().isEqual(LocalDate.now()) && plan.get().getHoraInicio().isBefore(LocalTime.now()))) {
-            throw new IllegalArgumentException(("No es posible abandonar un plan que ya ha ocurrido"));
+            throw new InvalidDateException(("No es posible abandonar un plan que ya ha ocurrido"));
         }
 
         plan.get().getUserList().remove(user);
@@ -89,14 +89,14 @@ public class PlanServices {
 
     private void findUserIsntSubscribed(Plan plan, User user) {
         if (!(plan.getUserList().contains(user))) {
-            throw new IllegalArgumentException("El usuario no esta apuntado al plan");
+            throw new InvalidObjectException("El usuario no esta apuntado al plan");
         }
     }
 
 
     private void checkIfExist(Optional<Plan> plan) {
         if (plan.isEmpty()) {
-            throw new IllegalArgumentException("El id especificado no corresponde a ningun plan");
+            throw new InvalidObjectException("El id especificado no corresponde a ningun plan");
         }
     }
 
@@ -105,7 +105,7 @@ public class PlanServices {
         checkIfExist(plan);
         checkOwner(plan.get(), activeUser);
         if (actividadRepositoryInterface.read(ids[0]).isEmpty()) {
-            throw new IllegalArgumentException("La actividad con el id:" + ids[0] + " no se ha encontrado");
+            throw new InvalidObjectException("La actividad con el id:" + ids[0] + " no se ha encontrado");
         }
         plan.get().addActividad(actividadRepositoryInterface.read(ids[0]).get());
         planRepositoryInterface.update(plan.get());
@@ -113,7 +113,7 @@ public class PlanServices {
 
     private void checkOwner(Plan plan, User activeUser) {
         if (!(plan.getOwnerName().equals(activeUser.getNombreUsuario()))) {
-            throw new IllegalArgumentException("Solo el propietario puede modificar/eliminar el plan");
+            throw new InvalidObjectException("Solo el propietario puede modificar/eliminar el plan");
         }
     }
 

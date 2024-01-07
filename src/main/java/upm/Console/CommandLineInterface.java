@@ -7,6 +7,7 @@ import upm.Data.Models.ActividadesTipos.ActividadTeatro;
 import upm.Data.Models.Plan;
 import upm.Data.Models.User;
 import upm.DependencyInjector;
+import upm.InvalidObjectException;
 import upm.Services.ActividadServices;
 import upm.Services.PlanServices;
 import upm.Services.UserServices;
@@ -155,7 +156,7 @@ public class CommandLineInterface {
         String[] datos = scanner.nextLine().split(";");
 
         if (datos.length != 5) {
-            throw new IllegalArgumentException(CommandNames.CREATE_PLAN.getHelp());
+            throw new InvalidValuesException(CommandNames.CREATE_PLAN.getHelp());
         }
 
         Plan createdPlan = planServices.create(new Plan(datos[0], LocalDate.parse(datos[1], DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalTime.parse(datos[2], DateTimeFormatter.ofPattern("HH:mm")), datos[3], Integer.valueOf(datos[4])));
@@ -168,7 +169,7 @@ public class CommandLineInterface {
         checkLoginStatus(activeUser);
         String[] datos = scanner.next().split(";");
         if (datos.length != 2) {
-            throw new IllegalArgumentException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
+            throw new InvalidValuesException(CommandNames.ADD_ACTIVIDAD_TO_PLAN.getHelp());
         }
         Integer[] ids = new Integer[]{Integer.parseInt(datos[0]), Integer.parseInt(datos[1])};
         planServices.addActivity(ids, activeUser.get());
@@ -185,7 +186,7 @@ public class CommandLineInterface {
 
         String[] datos = scanner.next().split(";");
         if (datos.length != 2) {
-            throw new IllegalArgumentException(CommandNames.USER_LOGIN.getHelp());
+            throw new InvalidValuesException(CommandNames.USER_LOGIN.getHelp());
         }
         User userName = userServices.login(datos[0], datos[1]);
         view.showBold("Bienvenido " + datos[0] + "!");
@@ -205,13 +206,13 @@ public class CommandLineInterface {
 
     private void checkLoginStatus(Optional<User> activeUser) {
         if (activeUser.isEmpty()) {
-            throw new IllegalArgumentException("Primero debe iniciar sesion para poder realizar alguna accion");
+            throw new InvalidObjectException("Primero debe iniciar sesion para poder realizar alguna accion");
         }
     }
 
     private void joinPlan(Optional<User> user, Scanner scanner) {
         checkLoginStatus(user);
-        this.view.show("Introduzca el id del plan al que quiere unirse");
+        this.view.show("Introduzca el id del plan al que quiere unirse ");
         Integer id = scanner.nextInt();
         planServices.joinPlanById(user.get(), id);
         view.showBold("El usuario " + user.get().getNombreUsuario() + " se ha unido correctamente al plan!");

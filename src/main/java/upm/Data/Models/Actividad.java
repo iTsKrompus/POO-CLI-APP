@@ -1,5 +1,7 @@
 package upm.Data.Models;
 
+import upm.InvalidAtributeException;
+
 import java.time.Duration;
 import java.util.Objects;
 
@@ -29,7 +31,7 @@ public abstract class Actividad {
 
     public void setTipo(String tipo) {
         if (!tipo.equals("generica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
-            throw new IllegalArgumentException("Tipo de actividad no existente");
+            throw new InvalidAtributeException("Tipo de actividad no existente");
         }
         this.tipo = tipo;
     }

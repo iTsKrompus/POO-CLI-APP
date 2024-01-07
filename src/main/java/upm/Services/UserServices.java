@@ -1,8 +1,10 @@
 package upm.Services;
 
+import upm.InvalidAtributeException;
 import upm.Data.Models.User;
 import upm.Data.Repositories.PlanRepositoryInterface;
 import upm.Data.Repositories.UserRepositoryInterface;
+import upm.InvalidObjectException;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class UserServices {
         if (userRepositoryInterface.findByName(user.getNombreUsuario()).isPresent()) {
             throw new IllegalArgumentException("El nombre ya existe cuando deberia ser unico: " + user.getNombreUsuario());
         } else if (userRepositoryInterface.findByMobile(user.getTelefono()).isPresent()) {
-            throw new IllegalArgumentException("El telefono ya existe cuando deberia de ser unico: " + user.getTelefono());
+            throw new InvalidObjectException("El telefono ya existe cuando deberia de ser unico: " + user.getTelefono());
         }
         return userRepositoryInterface.create(user);
     }
@@ -33,11 +35,11 @@ public class UserServices {
                 return user;
             }
         }
-        throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos");
+        throw new InvalidObjectException("Parametros de inicio de sesion incorrectos");
     }
 public HashMap<Integer, Float> ratePlan (HashMap<Integer, Float> puntuaciones, Integer id, float rate){
     if (rate < 0.0 || rate > 10.0){
-        throw new IllegalArgumentException("La puntucion debe estar comprendida entre el 0 y 10");
+        throw new InvalidAtributeException("La puntucion debe estar comprendida entre el 0 y 10");
     }
 
     puntuaciones.put(id,rate);

@@ -1,5 +1,7 @@
 package upm.Data.Models;
 
+import upm.InvalidAtributeException;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -95,7 +97,7 @@ public class Plan {
                 this.setAforo(actividad.getAforo());
             }
         } else {
-            throw new IllegalArgumentException("El aforo de la actividad no puede ser mayor al del plan\n");
+            throw new InvalidAtributeException("El aforo de la actividad no puede ser mayor al del plan\n");
         }
     }
 

@@ -1,5 +1,7 @@
 package upm.Data.Models;
 
+import upm.InvalidAtributeException;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -33,7 +35,7 @@ public class User {
 
     public void setEdad(int edad) {
         if (edad < 14 || edad > 100) {
-            throw new IllegalArgumentException("Rango de edad incorrecto (Permitido entre 14 y 100)");
+            throw new InvalidAtributeException("Rango de edad incorrecto (Permitido entre 14 y 100)");
         }
         this.edad = edad;
     }
@@ -52,7 +54,7 @@ public class User {
 
     public void setPassword(String password) {
         if (password.length() < 3) {
-            throw new IllegalArgumentException("La password es demasiado corta (3 caracteres al menos)");
+            throw new InvalidAtributeException("La password es demasiado corta (3 caracteres al menos)");
         }
         this.password = password;
     }
