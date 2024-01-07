@@ -4,6 +4,7 @@ import upm.Data.Models.User;
 import upm.Data.Repositories.PlanRepositoryInterface;
 import upm.Data.Repositories.UserRepositoryInterface;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 public class UserServices {
@@ -34,7 +35,14 @@ public class UserServices {
         }
         throw new IllegalArgumentException("Parametros de inicio de sesion incorrectos");
     }
+public HashMap<Integer, Float> ratePlan (HashMap<Integer, Float> puntuaciones, Integer id, float rate){
+    if (rate < 0.0 || rate > 10.0){
+        throw new IllegalArgumentException("La puntucion debe estar comprendida entre el 0 y 10");
+    }
 
+    puntuaciones.put(id,rate);
+    return puntuaciones;
+}
 
 }
 

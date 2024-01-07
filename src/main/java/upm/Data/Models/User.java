@@ -1,5 +1,6 @@
 package upm.Data.Models;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class User {
@@ -8,12 +9,14 @@ public class User {
     private int telefono;
     private String nombreUsuario;
     private Integer id;
+    private HashMap<Integer, Float> puntuaciones;
 
     public User(String nombreUsuario, int edad, int telefono, String password) {
         this.nombreUsuario = nombreUsuario;
         setEdad(edad);
         this.telefono = telefono;
         setPassword(password);
+        puntuaciones = new HashMap<>();
     }
 
     public String getNombreUsuario() {
@@ -60,6 +63,13 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public HashMap getPuntuaciones (){
+        return this.puntuaciones;
+    }
+    public void setPuntuaciones(HashMap<Integer, Float> puntuaciones){
+        this.puntuaciones = puntuaciones;
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 
 public class PlanServices {
@@ -123,6 +124,9 @@ public class PlanServices {
 
         return plan.get().totalCost(activeUser.getEdad());
     }
-
+ public void rate (Integer id){
+        Optional<Plan> plan = planRepositoryInterface.read(id);
+        checkIfExist(plan);
+ }
 }
 

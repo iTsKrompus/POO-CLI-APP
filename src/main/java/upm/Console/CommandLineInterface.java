@@ -100,6 +100,9 @@ public class CommandLineInterface {
             case CHECK_PLAN_COST:
                 checkPlanCost(scanner, userContainer.getUser());
                 break;
+            case RATE_PLAN:
+                this.ratePlan(scanner, userContainer.getUser());
+                break;
             case HELP:
                 this.help();
                 break;
@@ -253,14 +256,24 @@ public class CommandLineInterface {
     private void activitiesPerType(Scanner scanner, Optional<User> user) {
         checkLoginStatus(user);
         view.showBold("Tipo de actividad: ");
-        String type = scanner.next();
-        List<Actividad> actividades = actividadServices.listarTipo(type);
+        List<Actividad> actividades = actividadServices.listarTipo(scanner.next());
         showLists(actividades);
     }
 
     private void showLists(List<Actividad> actividades) {
         ShowObject<Actividad> results = new ShowObject<Actividad>(view);
         results.showListInformation(actividades);
+    }
+    private void ratePlan(Scanner scanner, Optional<User> activeUser){
+        checkLoginStatus(activeUser);
+
+        view.show("Cual plan quiere valorar ? ");
+        Integer id = scanner.nextInt();
+        this.planServices.rate(id);
+
+        view.show("Que puntuacion le quiere dar? ");
+        Float rate = scanner.nextFloat();
+        activeUser.get().setPuntuaciones(userServices.ratePlan(activeUser.get().getPuntuaciones(), id, rate));
     }
 
 }

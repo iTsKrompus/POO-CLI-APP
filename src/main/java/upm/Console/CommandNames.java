@@ -17,6 +17,7 @@ public enum CommandNames {
     LEFT_PLAN("left-plan", "                    <planId>   Comando para abandonar un plan introduciendo su id"),
     SUBSCRIBED_PLANS_LIST("subscribed-plans-list", "        muestra la lista de los planes a los que estas subscrito"),
     CHECK_PLAN_COST("check-plan-cost", "              <planId>     Muestra el coste total del plan con todas sus actividades"),
+    RATE_PLAN("rate-plan", "                    <planId> <valoracion>    Permite puntuar planes a los usuarios"),
     HELP("help", "                         muestra la ayuda de todos los comandos disponibles"),
     EXIT("exit", "                         termina la lectura de comandos(termina la ejecuccion del programa)");
 
