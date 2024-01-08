@@ -22,8 +22,8 @@ public class PlanTest {
 
     @BeforeEach
     void before() {
-        plan = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 0);
-        plan2 = new Plan("Quedada", LocalDate.of(2023,11,15), LocalTime.of(10,30), "Calle lazarillo de Tormes", 15);
+        plan = new Plan("Quedada", LocalDate.of(2023, 11, 15), LocalTime.of(10, 30), "Calle lazarillo de Tormes", 0);
+        plan2 = new Plan("Quedada", LocalDate.of(2023, 11, 15), LocalTime.of(10, 30), "Calle lazarillo de Tormes", 15);
         act1 = new ActividadTeatro("teatro", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 10);
         act2 = new ActividadCine("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 15);
         act3 = new ActividadCine("cine", "salida", "Actividad para no tan jovenes", Duration.ofMinutes(140), 25.99, 20);

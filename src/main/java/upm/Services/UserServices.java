@@ -1,9 +1,9 @@
 package upm.Services;
 
-import upm.InvalidAtributeException;
 import upm.Data.Models.User;
 import upm.Data.Repositories.PlanRepositoryInterface;
 import upm.Data.Repositories.UserRepositoryInterface;
+import upm.InvalidAtributeException;
 import upm.InvalidObjectException;
 
 import java.util.HashMap;
@@ -37,14 +37,15 @@ public class UserServices {
         }
         throw new InvalidObjectException("Parametros de inicio de sesion incorrectos");
     }
-public HashMap<Integer, Float> ratePlan (HashMap<Integer, Float> puntuaciones, Integer id, float rate){
-    if (rate < 0.0 || rate > 10.0){
-        throw new InvalidAtributeException("La puntucion debe estar comprendida entre el 0 y 10");
-    }
 
-    puntuaciones.put(id,rate);
-    return puntuaciones;
-}
+    public HashMap<Integer, Float> ratePlan(HashMap<Integer, Float> puntuaciones, Integer id, float rate) {
+        if (rate < 0.0 || rate > 10.0) {
+            throw new InvalidAtributeException("La puntucion debe estar comprendida entre el 0 y 10");
+        }
+
+        puntuaciones.put(id, rate);
+        return puntuaciones;
+    }
 
 }
 

@@ -124,9 +124,10 @@ public class PlanServices {
 
         return plan.get().totalCost(activeUser.getEdad());
     }
- public void rate (Integer id){
+
+    public void rate(Integer id) {
         Optional<Plan> plan = planRepositoryInterface.read(id);
         checkIfExist(plan);
- }
+    }
 }
 

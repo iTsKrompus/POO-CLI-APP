@@ -22,6 +22,7 @@ public class ActividadTeatro extends Actividad {
         } else if (edad >= EDAD_ANCIANO) {
             dto = DTO_ANCIANO;
         }
+
         return getCoste() * dto;
     }
 }

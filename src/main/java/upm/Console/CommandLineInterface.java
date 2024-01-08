@@ -265,7 +265,8 @@ public class CommandLineInterface {
         ShowObject<Actividad> results = new ShowObject<Actividad>(view);
         results.showListInformation(actividades);
     }
-    private void ratePlan(Scanner scanner, Optional<User> activeUser){
+
+    private void ratePlan(Scanner scanner, Optional<User> activeUser) {
         checkLoginStatus(activeUser);
 
         view.show("Cual plan quiere valorar ? ");

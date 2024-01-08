@@ -29,7 +29,7 @@ public abstract class Actividad {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(String tipo) throws InvalidAtributeException{
         if (!tipo.equals("generica") && !(tipo.equals("cine")) && !(tipo.equals("teatro"))) {
             throw new InvalidAtributeException("Tipo de actividad no existente");
         }

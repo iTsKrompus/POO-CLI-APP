@@ -67,10 +67,11 @@ public class User {
         this.id = id;
     }
 
-    public HashMap getPuntuaciones (){
+    public HashMap getPuntuaciones() {
         return this.puntuaciones;
     }
-    public void setPuntuaciones(HashMap<Integer, Float> puntuaciones){
+
+    public void setPuntuaciones(HashMap<Integer, Float> puntuaciones) {
         this.puntuaciones = puntuaciones;
     }
 
